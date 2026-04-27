@@ -15,6 +15,7 @@ import {
 import {
   communityBorderRadius,
   communityWidthStyle,
+  hoverStyle,
 } from "../../communityStyle";
 
 // 게시글 카드 컴포넌트 카드 스타일
@@ -27,17 +28,7 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   border: 2px solid transparent;
-  cursor: pointer;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
-
-  &:hover {
-    border-color: ${theme.PALETTE.primary.main};
-    box-shadow: 0 8px 24px rgba(67, 89, 252, 0.12);
-    transform: translateY(-2px);
-  }
+  ${hoverStyle}
 `;
 
 const TopRow = styled.div`
