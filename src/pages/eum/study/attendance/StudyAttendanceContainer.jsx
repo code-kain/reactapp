@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 
 const StudyAttendanceContainer = () => {
-    const [isOpen, setIsOpen] = useState(true);
+    // const [isOpen, setIsOpen] = useState(true);
     
     return (
         <div>
