@@ -5,15 +5,22 @@ import { height } from '@fortawesome/free-solid-svg-icons/fa0';
 const EumMainContainer = () => {
   return (
     <>
-      <div >
+      <div style={{
+        overflowX: 'hidden',
+        overflow: 'hidden',   // ← 추가
+        position: 'relative', // ← 추가
+        width: '100%',
+      }}>
+        {/* 배너 상단 큰 글씨 */}
         <div style={{
         display : 'flex',
         justifyContent: 'center',
         alignContent:'center',
         alignItems:'flex-end',
-        marginTop: '223px'
+        marginTop: '223px',
+        
         }}>
-          <h1 style={{fontSize: theme.FONT_SIZE.h1, 
+          <p style={{fontSize: theme.FONT_SIZE.h1, 
             fontWeight: theme.FONT_WEIGHT.bold, 
             textAlign:'center',
             FONT_LINE: theme.FONT_LINE.h1,
@@ -24,9 +31,10 @@ const EumMainContainer = () => {
               마음이 이어지는 곳
             </span> <br />
             이음
-          </h1>
+          </p>
         </div>
 
+        {/* 배너 회색 작은 글씨 */}
         <div style={{
         display : 'flex',
         justifyContent: 'center',
@@ -35,7 +43,7 @@ const EumMainContainer = () => {
         marginTop: '36px'
         
         }}>
-          <h7 style={{
+          <p style={{
             fontSize: theme.FONT_SIZE.h7, 
             fontWeight: theme.FONT_WEIGHT.regular, 
             color: theme.GRAYSCALE[7], 
@@ -45,17 +53,101 @@ const EumMainContainer = () => {
             }}>
             수어를 배우고 싶은 청인과 함께하고 싶은 농인 <br />
             모두를 위한 따뜻한 대화 공간이에요.
-          </h7>
+          </p>
         </div>
 
+
+        {/* 배너 초록 흐림 */}
+        <div style={{
+          position: 'absolute',
+          left: '281px',   // X값
+          top: '759px',    // Y값
+          width: '320px',
+          height: '320px',
+          borderRadius: '50%',
+          backgroundColor: '#A8F0D8',
+          filter: 'blur(87px)',
+          opacity:'0.25'
+        }}>
+        </div>
+
+        {/* 배너 파란 흐림 */}
+        <div style={{
+          position: 'absolute',
+          left: '71px',   // X값
+          top: '159px',    // Y값
+          width: '416px',
+          height: '416px',
+          borderRadius: '50%',
+          backgroundColor: '#7EB8FF',
+          filter: 'blur(116px)',
+          opacity:'0.3'
+        }}>
+        </div>
+
+        {/* 배너 주황 흐림 */}
+        <div style={{
+          position: 'absolute',
+          left: '750px',   // X값
+          top: '119px',    // Y값
+          width: '283px',
+          height: '283px',
+          borderRadius: '50%',
+          backgroundColor: '#FFBF80',
+          filter: 'blur(116px)',
+          opacity:'0.3'
+        }}>
+        </div>
+
+        {/* 배너 노랑 흐림 */}
+        <div style={{
+          position: 'absolute',
+          left: '942px',   // X값
+          top: '850px',    // Y값
+          width: '288px',
+          height: '288px',
+          borderRadius: '50%',
+          backgroundColor: '#FFD96B',
+          filter: 'blur(87px)',
+          opacity:'0.25'
+        }}>
+        </div>
+
+        {/* 배너 보라 흐림 */}
+        <div style={{
+          position: 'absolute',
+          left: '1477px',   // X값
+          top: '590px',    // Y값
+          width: '384px',
+          height: '384px',
+          borderRadius: '50%',
+          backgroundColor: '#C4A8FF',
+          filter: 'blur(102px)',
+          opacity:'0.3'
+        }}>
+        </div>
+        <div style={{
+          position: 'absolute',
+          left: '1497px',   // X값
+          top: '148px',    // Y값
+          width: '288px',
+          height: '288px',
+          borderRadius: '50%',
+          backgroundColor: '#FBC8FF',
+          filter: 'blur(87px)',
+          opacity:'0.25'
+        }}>
+        </div>
+        
         <div style={{
         display : 'flex',
         justifyContent: 'center',
         alignContent:'center',
-        alignItems:'flex-end',
+        alignItems:'center',
         marginTop: '36px',
-        
+        marginBottom:'435px',
         }}>
+
           <button style={{
             backgroundColor : theme.PALETTE.primary.main,
             color: theme.PALETTE.white,
@@ -65,19 +157,20 @@ const EumMainContainer = () => {
             padding: '20px 50px',
             borderRadius : '50px',
             letterSpacing: '-0.02em',
-            marginBottom:'40px'
+            height:'60px',
+            width:'250px',
+            whiteSpace: 'nowrap'
             }}>
             지금 시작하기 →
           </button>
         </div>
 
         <div style={{
-        display : 'flex',
-        justifyContent: 'center',
-        alignItems:'flex-end',
-        maxHeight:'1221px',
-        height: '1000px',
-        backgroundColor: theme.GRAYSCALE[8]
+          display : 'flex',
+          justifyContent: 'center',
+          maxHeight:'1000px',
+          minHeight:'1221px',
+          backgroundColor: theme.GRAYSCALE[10]
         }}>
           <span style={{ 
             textAlign:'center', 
@@ -85,20 +178,12 @@ const EumMainContainer = () => {
             FONT_LINE : theme.FONT_LINE.h4,
             fontSize: theme.FONT_SIZE.h3,
             fontWeight: theme.FONT_WEIGHT.bold,
+            paddingTop: '108px'
             }}>
             이음에서만 만날 수 있는 <br />
             다양한 콘텐츠를 소개합니다.
           </span>
         </div>
-
-        <div style={{height:'80px', display:'flex'}}>
-          <span style={{height:'54px'}}>fasdfa</span>
-          <span> dfafsdf</span>
-        </div>
-
-
-
-
 
       </div>
     </>
