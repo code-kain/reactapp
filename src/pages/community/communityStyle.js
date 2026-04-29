@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import theme from "../../styles/theme";
+import { h11Bold, h6Bold, h7Bold, h9Bold } from "../../styles/common";
 
 // 커뮤니티 좌측 (9개 그리드) 영역 너비
 export const communityWidthStyle = css`
@@ -36,12 +37,62 @@ export const ContentArea = styled.main`
 `;
 
 /* ══ Left Block ══ */
+// export const LeftBlock = styled.div`
+//   width: 984px;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-end;
+//   gap: 24px;
+// `;
+
+// export const LeftBlock = styled.div`
+//   width: 984px;
+//   display: flex;
+//   flex-direction: ${({ wrap }) => (wrap ? "row" : "column")};
+//   ${({ wrap }) => wrap && `flex-wrap: wrap;`}
+//   align-items: flex-end;
+//   gap: 24px;
+// `;
+
 export const LeftBlock = styled.div`
   width: 984px;
   display: flex;
+  flex-direction: ${({ wrap }) => (wrap ? "row" : "column")};
+  ${({ wrap }) => wrap && `flex-wrap: wrap;`}
+  align-items: flex-end;
+  gap: ${({ spaceBetween }) => (spaceBetween ? "0" : "24px")};
+  justify-content: ${({ spaceBetween }) =>
+    spaceBetween ? "space-between" : "flex-start"};
+  margin-top: ${({ marginTop }) => marginTop || 0}px;
+`;
+
+export const ColumnBlock = styled.div`
+  width: ${({ width }) => width || "984px"};
+  display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 24px;
+  justify-content: ${({ justifyContent }) => justifyContent || "flex-start"};
+  gap: ${({ gap }) => gap || "24px"};
+  margin-top: ${({ marginTop }) => marginTop || "0px"};
+`;
+
+export const RowBlock = styled.div`
+  width: ${({ width }) => width || "984px"};
+  display: flex;
+  flex-direction: row;
+  flex-wrap: ${({ flexWrap }) => flexWrap || "nowrap"};
+  align-items: flex-end;
+  justify-content: ${({ justifyContent }) => justifyContent || "flex-start"};
+  gap: ${({ gap }) => gap || "24px"};
+  margin-top: ${({ marginTop }) => marginTop || "0px"};
+`;
+
+// 카드 종류를 간단하게 크기를 맞춰서 하는 것
+export const RowSimpleBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: ${({ gap }) => gap || "24px"};
 `;
 
 // column 으로 24px 간격 으로 리스트 하는 개념
@@ -103,5 +154,72 @@ export const textFieldStyle = css`
 
   &:focus {
     border-color: ${theme.PALETTE.primary.main};
+  }
+`;
+
+// 텍스트 스타일 컴포넌트
+export const H6Bold = styled.p`
+  ${h6Bold}
+`;
+
+export const H7Bold = styled.p`
+  ${h7Bold}
+`;
+
+// 버튼 스타일 컴포넌트
+export const ActionBtn = styled.button`
+  ${h11Bold}
+  padding: 8px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+
+  background: ${({ $type }) => {
+    if ($type === "submit") return theme.PALETTE.primary.main;
+    return theme.PALETTE.white;
+  }};
+  color: ${({ $type }) => {
+    if ($type === "submit") return theme.PALETTE.white;
+    if ($type === "draft") return theme.PALETTE.primary.main;
+    return theme.GRAYSCALE[9];
+  }};
+  border: 1px solid
+    ${({ $type }) =>
+      $type === "draft" ? theme.PALETTE.primary.main : theme.GRAYSCALE[8]};
+
+  &:hover {
+    opacity: 0.85;
+  }
+`;
+
+// 카테고리 선택 버튼 타입
+export const CategoryPill = styled.button`
+  height: 51px;
+  padding: 16px 30px;
+  border-radius: 100px;
+  ${h9Bold}
+  line-height: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+
+  background: ${({ $active }) =>
+    $active ? theme.PALETTE.primary.main : theme.PALETTE.white};
+  color: ${({ $active }) =>
+    $active ? theme.PALETTE.white : theme.TEXT_COLOR.basic};
+  border: 1px solid
+    ${({ $active }) =>
+      $active ? theme.PALETTE.primary.main : theme.GRAYSCALE[8]};
+
+  &:hover {
+    background: ${({ $active }) =>
+      $active ? theme.PALETTE.primary.main : theme.PALETTE.primary.extraLight};
+    border-color: ${theme.PALETTE.primary.main};
+    color: ${({ $active }) =>
+      $active ? theme.PALETTE.white : theme.PALETTE.primary.main};
   }
 `;
