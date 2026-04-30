@@ -1,19 +1,7 @@
 import React from "react";
-import CommunityComponent from "./CommunityComponent";
 import { Link, Outlet } from "react-router-dom";
-import {
-  ActionBtn,
-  CategoryPill,
-  ColumnBlock,
-  ContentArea,
-  H6Bold,
-  H7Bold,
-  Page,
-  RowBlock,
-  RowSimpleBlock,
-} from "./communityStyle";
-import LiveChatCard from "./chat/chatComponents/LiveChatCard";
-import PostListCard from "./post/postComponents/PostListCard";
+import { ContentArea, Page } from "./communityStyle";
+import MainRightSide from "./common/MainRightSide";
 
 const users = [
   { userId: 1, userName: "홍길동" },
@@ -31,6 +19,9 @@ const CommunityContainer = () => {
             {/* 좌측 메인 */}
             {/* 해당 부분이 아울렛으로 되어야 함 */}
             <Outlet />
+
+            {/* 우측 사이드 바 정의 */}
+            <MainRightSide />
           </ContentArea>
         </Page>
       </div>

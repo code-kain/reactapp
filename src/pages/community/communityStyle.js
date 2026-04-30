@@ -1,6 +1,12 @@
 import styled, { css } from "styled-components";
 import theme from "../../styles/theme";
-import { h11Bold, h6Bold, h7Bold, h9Bold } from "../../styles/common";
+import {
+  h11Bold,
+  h12Regular,
+  h6Bold,
+  h7Bold,
+  h9Bold,
+} from "../../styles/common";
 
 // 커뮤니티 좌측 (9개 그리드) 영역 너비
 export const communityWidthStyle = css`
@@ -164,6 +170,14 @@ export const H6Bold = styled.p`
 
 export const H7Bold = styled.p`
   ${h7Bold}
+`;
+
+export const H11Bold = styled.p`
+  ${h11Bold}
+`;
+
+export const H12Regular = styled.p`
+  ${h12Regular}
 `;
 
 // 버튼 스타일 컴포넌트

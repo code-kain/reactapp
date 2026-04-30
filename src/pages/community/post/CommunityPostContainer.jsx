@@ -17,7 +17,6 @@ import PostListCard from "./postComponents/PostListCard";
 const CommunityPostContainer = () => {
   return (
     <div>
-      게시글 컨테이너
       {/* <CommunityPostComponent /> */}
       <ColumnBlock>
         {/* 상단 헤더 */}
