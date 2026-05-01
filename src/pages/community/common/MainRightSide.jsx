@@ -1,13 +1,15 @@
 import React from "react";
 import { ColumnBlock } from "../communityStyle";
+import SideUserProfile from "./SideUserProfile copy";
+import SideNotice from "./SideNotice";
 
 const MainRightSide = () => {
   return (
     <div>
       {/* 사이드 바 column */}
       <ColumnBlock width="312px">
-        <div>안녕</div>
-        <div>사이드 바</div>
+        <SideUserProfile />
+        <SideNotice />
       </ColumnBlock>
     </div>
   );
