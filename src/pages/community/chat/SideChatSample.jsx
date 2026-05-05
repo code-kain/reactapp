@@ -4,8 +4,10 @@ import { colors, fonts, radius } from "../constants";
 import SideChatListComponent from "./chatComponents/SideChatListComponent";
 import SideChatRequestComponent from "./chatComponents/SideChatRequestComponent";
 import SideChatComponent from "./chatComponents/SideChatComponent";
+import { h10Regular, h7Bold } from "../../../styles/common";
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
+// 이건 테스트 용 페이지
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -28,20 +30,15 @@ const GuideBox = styled.div`
 `;
 
 const PageTitle = styled.h2`
-  font-family: ${fonts.family};
-  font-weight: ${fonts.weight.bold};
-  font-size: ${fonts.size.xl};
+  ${h7Bold}
   color: ${colors.textMain};
   margin: 0;
 `;
 
 const Description = styled.p`
-  font-family: ${fonts.family};
-  font-weight: ${fonts.weight.regular};
-  font-size: ${fonts.size.md};
+  ${h10Regular}
   color: ${colors.textSub};
   margin: 0;
-  line-height: 1.6;
 `;
 
 const FlowList = styled.ul`
