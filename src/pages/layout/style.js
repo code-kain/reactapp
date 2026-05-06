@@ -17,8 +17,6 @@ export const styles = {
   },
 
   logoNav: {
-    // position: 'absolute' 제거!
-    // left: '300px' 제거!
     display: 'flex',
     alignItems: 'center',
     gap: '112px',
@@ -32,8 +30,6 @@ export const styles = {
   },
 
   rightNav: {
-    // position: 'absolute' 제거!
-    // left: '1120px' 제거!
     border: `solid 1.5px ${theme.TEXT_COLOR.primary}`,
     borderRadius: '10px',
     display: 'flex',
@@ -51,8 +47,6 @@ export const styles = {
   },
 
   rigthBackGroundNav: {
-    // position: 'absolute' 제거!
-    // left: '1232px' 제거!
     backgroundColor: theme.PALETTE.primary.main,
     color: theme.PALETTE.white,
     fontSize: theme.FONT_SIZE.h7,
