@@ -32,7 +32,7 @@ const Divider = styled.div`
   background: #f3f4f6;
 `;
 
-/* 메뉴 그리드 */
+/* 메뉴그리드 */
 const MenuGrid = styled.div`
   margin-top: 9px;
 
