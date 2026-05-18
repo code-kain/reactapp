@@ -1,6 +1,7 @@
 import React from "react";
 import { LearnAlphabetPage as S } from "../style";
 
+// 임시(figma) 
 const handImage = "https://www.figma.com/api/mcp/asset/6a86b333-4feb-4790-aa5f-d60095a27f7a";
 
 const LearnAlphabetPopup = ({ letter, onClose, onPrev, onNext }) => {

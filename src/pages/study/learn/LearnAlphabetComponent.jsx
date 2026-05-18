@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import LearnAlphabetPopup from "./parts/LearnAlphabetPopup";
 import { LearnAlphabetPage as S } from "./style";
 
+
 const alphabetData = {
   menus: [
     { id: "learn", icon: "🏠", label: "학습" },
