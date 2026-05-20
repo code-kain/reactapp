@@ -210,6 +210,26 @@ S.Input = styled.input`
   }
 `;
 
+/* 읽기 전용 이메일 박스 */
+S.ReadOnlyField = styled.div`
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f9fafb;
+
+  font-family: "Pretendard";
+  font-size: 14px;
+  font-weight: ${FONT_WEIGHT.regular};
+  color: #666666;
+`;
+
 /* 닉네임 입력 줄 */
 S.NicknameInputRow = styled.div`
   display: grid;
@@ -560,6 +580,15 @@ S.PasswordFieldGroup = styled.div`
   margin-top: 26px;
 `;
 
+/* 비밀번호 확인 안내 */
+S.PasswordErrorText = styled.p`
+  margin: 7px 0 0;
+
+  font-size: 12px;
+  font-weight: ${FONT_WEIGHT.regular};
+  color: #f14141;
+`;
+
 /* 비밀번호 입력 묶음 */
 S.PasswordField = styled.div`
   width: 466px;
@@ -569,6 +598,7 @@ S.PasswordField = styled.div`
 S.PasswordInput = styled(S.Input)`
   width: 100%;
 `;
+
 
 /* 비밀번호 강도 바 */
 S.PasswordStrengthBar = styled.div`
@@ -583,7 +613,9 @@ S.PasswordStrengthItem = styled.div`
   height: 4px;
 
   border-radius: 999px;
-  background: #f3f4f6;
+  background: ${({ $active }) => ($active ? "#4359fc" : "#f3f4f6")};
+
+  transition: 0.2s ease;
 `;
 
 /* 비밀번호 안내 */
@@ -591,8 +623,8 @@ S.PasswordDesc = styled.p`
   margin: 7px 0 0;
 
   font-size: 12px;
-  font-weight: ${FONT_WEIGHT.light};
-  color: #9ca3af;
+  font-weight: ${FONT_WEIGHT.regular};
+  color: #f14141;
 `;
 
 /* 비밀번호 구분선 */
