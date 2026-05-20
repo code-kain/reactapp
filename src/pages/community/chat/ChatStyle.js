@@ -34,6 +34,7 @@ const Popup = styled.div`
   ${flexCenterColumn}
 `;
 
+// 팝업 채팅방
 // ─── Header ────────────────────────────────────────────────────────────────────
 
 // 채팅방 자체 해더
@@ -135,6 +136,8 @@ const HeaderRight = styled.div`
   gap: 6px;
 `;
 
+// 팝업채팅방 헤더 우측 버튼
+
 const LeaveBtn = styled.button`
   background: ${colors.dangerOverlay};
   border: none;
@@ -149,38 +152,61 @@ const LeaveBtn = styled.button`
 `;
 
 const MinimizeBtn = styled.button`
-  background: ${colors.overlayWhite15};
+  width: 30px;
+  height: 30px;
   border: none;
   border-radius: 6px;
-  width: 20px;
-  height: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  color: ${colors.textWhite};
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  overflow: hidden;
-  img {
-    width: 40%;
-    height: 40%;
+  padding: 0;
+  font-size: 10px;
+  flex-shrink: 0;
+  /* img {
+    width: 60%;
+    height: 60%;
     object-fit: contain;
-  }
+  } */
 `;
+// const MinimizeBtn = styled.button`
+//   background: ${colors.overlayWhite15};
+//   border: none;
+//   border-radius: 6px;
+//   width: 20px;
+//   height: 20px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   overflow: hidden;
+//   img {
+//     width: 40%;
+//     height: 40%;
+//     object-fit: contain;
+//   }
+// `;
 
-const CloseBtn = styled.button`
-  background: ${colors.dangerOverlay};
-  border: none;
-  border-radius: 6px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  img {
-    width: 8px;
-    height: 9px;
-  }
+const CloseBtn = styled(MinimizeBtn)`
+  background: rgba(255, 80, 80, 0.5);
 `;
+// const CloseBtn = styled.button`
+//   background: ${colors.dangerOverlay};
+//   border: none;
+//   border-radius: 6px;
+//   width: 20px;
+//   height: 20px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   img {
+//     width: 8px;
+//     height: 9px;
+//   }
+// `;
 
 // ─── Body ──────────────────────────────────────────────────────────────────────
 

@@ -6,14 +6,15 @@ import {
   HeaderTitle,
   HeaderBtns,
   SelectBody,
+  LeaveBtn,
+  MinimizeBtn,
+  CloseBtn,
 } from "./ChatStyle";
 import SelectRoomListPanel from "./popupChat/SelectRoomListPanel";
 import SelectOngoingPanel from "./popupChat/SelectOngoingPanel";
 import { useChatContext } from "../context/ChatContext";
 import minusIcon from "../assets/chat/minus_icon.svg";
 import closeIcon from "../assets/chat/close_icon.svg";
-import styled from "styled-components";
-import { colors } from "../constants";
 
 const S = {
   SelectPageBg,
@@ -22,28 +23,12 @@ const S = {
   HeaderTitle,
   HeaderBtns,
   SelectBody,
+  LeaveBtn,
+  MinimizeBtn,
+  CloseBtn,
 };
 
 // 채팅방 헤더 임시 버튼
-const HeaderBtn = styled.button`
-  width: 30px;
-  height: 30px;
-  border: none;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.15);
-  color: ${colors.textWhite};
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  font-size: 10px;
-  flex-shrink: 0;
-`;
-
-const CloseBtn = styled(HeaderBtn)`
-  background: rgba(255, 80, 80, 0.5);
-`;
 
 const PopupChatRoomSelect = () => {
   const { handleSelectMinimize, handleSelectClose } = useChatContext();
@@ -54,12 +39,12 @@ const PopupChatRoomSelect = () => {
         <S.SelectHeader>
           <S.HeaderTitle>채팅방 선택</S.HeaderTitle>
           <S.HeaderBtns>
-            <HeaderBtn onClick={handleSelectMinimize}>
+            <S.MinimizeBtn onClick={handleSelectMinimize}>
               <img src={minusIcon} alt="최소화" />
-            </HeaderBtn>
-            <CloseBtn onClick={handleSelectClose}>
+            </S.MinimizeBtn>
+            <S.CloseBtn onClick={handleSelectClose}>
               <img src={closeIcon} alt="닫기" />
-            </CloseBtn>
+            </S.CloseBtn>
           </S.HeaderBtns>
         </S.SelectHeader>
 
