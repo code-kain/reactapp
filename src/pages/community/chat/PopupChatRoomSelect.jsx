@@ -1,13 +1,28 @@
 import React from "react";
-import S from "./ChatStyle";
+import {
+  SelectPageBg,
+  SelectPopup,
+  SelectHeader,
+  HeaderTitle,
+  HeaderBtns,
+  SelectBody,
+} from "./ChatStyle";
 import SelectRoomListPanel from "./popupChat/SelectRoomListPanel";
 import SelectOngoingPanel from "./popupChat/SelectOngoingPanel";
 import { useChatContext } from "../context/ChatContext";
-
 import minusIcon from "../assets/chat/minus_icon.svg";
 import closeIcon from "../assets/chat/close_icon.svg";
 import styled from "styled-components";
 import { colors } from "../constants";
+
+const S = {
+  SelectPageBg,
+  SelectPopup,
+  SelectHeader,
+  HeaderTitle,
+  HeaderBtns,
+  SelectBody,
+};
 
 // 채팅방 헤더 임시 버튼
 const HeaderBtn = styled.button`

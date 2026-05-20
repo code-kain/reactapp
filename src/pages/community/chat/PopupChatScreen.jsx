@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { colors } from "../constants";
-import S from "./ChatStyle";
+import {
+  PageBg,
+  Popup,
+  Body,
+  RightPanel,
+} from "./ChatStyle";
 import PopupChatHeader from "./popupChat/PopupChatHeader";
 import PopupParticipantList from "./popupChat/PopupParticipantList";
 import PopupChatCenter from "./popupChat/PopupChatCenter";
@@ -13,6 +18,13 @@ import {
   getChatRoomUsers,
   getChatRoomInfo,
 } from "../communityApi/chatApi";
+
+const S = {
+  PageBg,
+  Popup,
+  Body,
+  RightPanel,
+};
 
 const WS_BASE = "ws://localhost:10000/ws/chat";
 

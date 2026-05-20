@@ -1,14 +1,45 @@
 import React from "react";
-import S from "../ChatStyle";
+import styled from "styled-components";
+import {
+  Header,
+  HeaderLeft,
+  ProfileArea,
+  RoomInfo,
+  RoomTitle,
+  RoomSubText,
+  MessageStatus,
+  LiveBadge,
+  LiveIcon,
+  LiveText,
+  TodayMsgRow,
+  TodayMsgText,
+  HeaderRight,
+  LeaveBtn,
+} from "../ChatStyle";
 import { ThumbnailBox } from "../chatComponents/chatComponentStyle";
 import defaultProfileImg from "../../assets/chat/chat_default_profile.svg";
 import { useChatContext } from "../../context/ChatContext";
-
+import { colors } from "../../constants";
 import chatIcon from "../../assets/chat/chat_icon.svg";
 import minusIcon from "../../assets/chat/minus_icon.svg";
 import closeIcon from "../../assets/chat/close_icon.svg";
-import styled from "styled-components";
-import { colors } from "../../constants";
+
+const S = {
+  Header,
+  HeaderLeft,
+  ProfileArea,
+  RoomInfo,
+  RoomTitle,
+  RoomSubText,
+  MessageStatus,
+  LiveBadge,
+  LiveIcon,
+  LiveText,
+  TodayMsgRow,
+  TodayMsgText,
+  HeaderRight,
+  LeaveBtn,
+};
 
 const liveVectorUrl =
   "https://www.figma.com/api/mcp/asset/79378b34-81dd-4aef-bc8a-2e9814e941b7";

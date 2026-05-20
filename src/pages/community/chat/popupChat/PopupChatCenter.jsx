@@ -1,10 +1,56 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import S from "../ChatStyle";
+import {
+  CenterPanel,
+  MessagesArea,
+  OtherMsgWrap,
+  MsgAvatar,
+  MsgContentCol,
+  SenderName,
+  MsgTimeRow,
+  OtherBubble,
+  OtherBubbleText,
+  MsgTime,
+  MyMsgRow,
+  MyBubble,
+  MyBubbleText,
+  InputArea,
+  AttachRow,
+  AttachIcons,
+  AttachIcon,
+  AttachDivider,
+  InputRow,
+  TextInputBox,
+  SendBtn,
+} from "../ChatStyle";
 import chatImozi from "../../assets/chat/chat_imozi.svg";
 import chatImageUpload from "../../assets/chat/chat_image_upload.svg";
 import chatShare from "../../assets/chat/chat_share.svg";
 import chatSueo from "../../assets/chat/chat_sueo.svg";
+
+const S = {
+  CenterPanel,
+  MessagesArea,
+  OtherMsgWrap,
+  MsgAvatar,
+  MsgContentCol,
+  SenderName,
+  MsgTimeRow,
+  OtherBubble,
+  OtherBubbleText,
+  MsgTime,
+  MyMsgRow,
+  MyBubble,
+  MyBubbleText,
+  InputArea,
+  AttachRow,
+  AttachIcons,
+  AttachIcon,
+  AttachDivider,
+  InputRow,
+  TextInputBox,
+  SendBtn,
+};
 
 const TextInput = styled.input`
   flex: 1;

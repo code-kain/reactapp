@@ -1038,7 +1038,7 @@ const OngoingLastMsg = styled.p`
   white-space: nowrap;
 `;
 
-const S = {
+export {
   PageBg,
   Popup,
   Header,
@@ -1163,5 +1163,3 @@ const S = {
   OngoingLastTime,
   OngoingLastMsg,
 };
-
-export default S;
