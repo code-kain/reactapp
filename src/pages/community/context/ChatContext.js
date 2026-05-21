@@ -75,7 +75,8 @@ export const ChatProvider = ({ children }) => {
   }, []);
 
   // 채팅방 선택 화면에서 방 선택 → 팝업 오픈
-  const handleSelectRoom = useCallback(() => {
+  const handleSelectRoom = useCallback((room) => {
+    if (room) setActiveChatRoom(room);
     setView(VIEW.POPUP);
   }, []);
 
