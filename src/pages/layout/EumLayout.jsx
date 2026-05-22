@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, ScrollRestoration } from "react-router-dom";
 import * as S from "./style.js";
 import NotificationDropdown from "./NotificationDropdown";
 import useAuthStore from "../../store/authStore.js";
@@ -7,7 +7,7 @@ import useAuthStore from "../../store/authStore.js";
 const navLinks = [
   { label: "커뮤니티", to: "/community" },
   { label: "학습",    to: "/study" },
-  { label: "시험",    to: "/exam/info/notice" },
+  { label: "시험",    to: "/exam/info" },
   { label: "고객지원", to: "/customservice/notice" },
 ];
 
@@ -143,6 +143,7 @@ const EumLayout = () => {
         </S.RightNav>
       </S.Header>
 
+      <ScrollRestoration />
       <S.Main>
         <Outlet />
       </S.Main>
