@@ -62,6 +62,7 @@ export const ChatProvider = ({ children }) => {
   // 목록(사이드/팝업)에서 방 선택 → 현재 view 유지하고 ROOM 으로 전환
   const selectRoom = useCallback((room) => {
     if (room) setChatRoomDTO(room);
+    console.log("방이 없네요 ㅠㅠ");
     setScreen(SCREEN.ROOM);
   }, []);
 

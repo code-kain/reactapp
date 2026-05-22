@@ -77,7 +77,7 @@ const PopupChatScreen = () => {
             onUserClick={handleUserClick}
           />
           {/* 채팅 메세지 나열되는 곳 */}
-          <PopupChatCenter chatRoomId={chatRoomId} />
+          <PopupChatCenter chatRoomId={chatRoomId} key={chatRoomId} />
           <S.RightPanel>
             {selectedUser ? (
               <PopupUserInfoPanel

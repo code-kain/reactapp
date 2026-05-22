@@ -17,13 +17,7 @@ const PopupOverlay = styled.div`
 `;
 
 const MainRightSide = () => {
-  const {
-    chatRoomDTO,
-    view,
-    screen,
-    isLoading,
-    reopenChat,
-  } = useChatContext();
+  const { chatRoomDTO, view, screen, isLoading } = useChatContext();
 
   return (
     <div>
@@ -33,11 +27,7 @@ const MainRightSide = () => {
 
         {/* 플로팅 버튼 — 진행 중인 채팅이 있고 창이 닫혀 있을 때만 표시 */}
         {!isLoading && view === null && chatRoomDTO !== null && (
-          <FloatingChatButton
-            roomName={chatRoomDTO.title}
-            liveCount={`${chatRoomDTO.participantCount}명`}
-            onClick={reopenChat}
-          />
+          <FloatingChatButton />
         )}
       </ColumnBlock>
 

@@ -1,14 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { getChatRooms } from "../../communityApi/chatApi";
 
-const toDisplayRoom = (room) => ({
-  id: room.id,
-  name: room.chatRoomName,
-  detail: room.chatRoomDetail,
-  count: room.chatRoomUsers ?? 0,
-  isLive: true,
-  thumbnail: room.chatRoomProfile ?? null,
-});
+// const toDisplayRoom = (room) => ({
+//   id, chatRoomName, chatRoomDetail,
+// });
+// const toDisplayRoom = (room) => ({
+//   id: room.id,
+//   name: room.chatRoomName,
+//   detail: room.chatRoomDetail,
+//   count: room.chatRoomUsers ?? 0,
+//   isLive: true,
+//   thumbnail: room.chatRoomProfile ?? null,
+// });
 
 const useChatRoomList = () => {
   const [rooms, setRooms] = useState([]);
@@ -24,7 +27,16 @@ const useChatRoomList = () => {
     getChatRooms(page)
       .then((data) => {
         if (cancelled) return;
-        const newRooms = (data.rooms ?? []).map(toDisplayRoom);
+        const newRooms = (data.rooms ?? []).map(
+          ({ id, chatRoomName, chatRoomDetail, chatRoomUsers, chatRoomProfile }) => ({
+            id,
+            name: chatRoomName,
+            detail: chatRoomDetail,
+            count: chatRoomUsers ?? 0,
+            isLive: true,
+            thumbnail: chatRoomProfile ?? null,
+          })
+        );
         setRooms((prev) => (page === 1 ? newRooms : [...prev, ...newRooms]));
         setHasMore(page < (data.totalPages ?? 1));
       })

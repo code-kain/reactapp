@@ -79,10 +79,9 @@ const SelectRoomListPanel = () => {
 
   // 사이드 확대 등으로 좌측 탭과 매핑되지 않는 필터(ONGOING)가 들어오면
   // 시각적으로는 LIVE 탭에 해당하는 콘텐츠를 보여줌
-  const displayFilter =
-    FILTER_TABS.some((tab) => tab.key === listFilter)
-      ? listFilter
-      : LIST_FILTER.LIVE;
+  const displayFilter = FILTER_TABS.some((tab) => tab.key === listFilter)
+    ? listFilter
+    : LIST_FILTER.LIVE;
 
   const showRooms = displayFilter === LIST_FILTER.LIVE;
   const currentUsers =
@@ -108,6 +107,7 @@ const SelectRoomListPanel = () => {
                 채팅방이 없습니다.
               </S.RoomCountText>
             )}
+            {/* 채팅방 목록 */}
             {rooms.map((room) => (
               <S.RoomItem key={room.id} onClick={() => selectRoom(room)}>
                 <S.RoomItemLeft>
