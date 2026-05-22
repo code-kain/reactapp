@@ -8,6 +8,7 @@ import PopupChatScreen from "../chat/PopupChatScreen";
 import PopupChatRoomSelect from "../chat/PopupChatRoomSelect";
 import SideChat from "../chat/sideChat/SideChat";
 import { useChatContext, VIEW, SCREEN } from "../context/ChatContext";
+import CreateChatRoomModal from "../chat/createChatRoom/CreateChatRoomModal";
 
 const PopupOverlay = styled.div`
   position: fixed;
@@ -33,6 +34,13 @@ const MainRightSide = () => {
 
       {/* 사이드 채팅 — view=SIDE 일 때 (내부에서 screen 으로 ROOM/LIST 분기) */}
       {view === VIEW.SIDE && <SideChat />}
+
+      {/* 채팅방 생성 팝업 */}
+      {view === VIEW.POPUP && screen === SCREEN.CREATE && (
+        <PopupOverlay>
+          <CreateChatRoomModal />
+        </PopupOverlay>
+      )}
 
       {/* 팝업 — view=POPUP 일 때 screen 으로 채팅방/선택 화면 분기 */}
       {view === VIEW.POPUP && screen === SCREEN.ROOM && (

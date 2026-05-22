@@ -19,10 +19,11 @@ export const VIEW = {
   // null = 닫힘 (chatRoomDTO 이 있으면 플로팅 버튼이 노출됨)
 };
 
-// 화면 종류: 채팅방 안인지 / 채팅방을 고르는 화면인지
+// 화면 종류: 채팅방 안인지 / 채팅방을 고르는 화면인지 / 채팅방을 만드는 화면인 지
 export const SCREEN = {
   ROOM: "room",
   LIST: "list",
+  CREATE: "create",
 };
 
 // LIST 화면 안에서 어떤 필터(목록 종류)가 활성인지
@@ -52,6 +53,12 @@ export const ChatProvider = ({ children }) => {
   }, []);
 
   // ── 진입 ───────────────────────────────────────────────────────────────
+  // 채팅방 생성하는 팝업 띄우기
+  const openCreateChatRoom = useCallback(() => {
+    setScreen(SCREEN.CREATE);
+    setView(VIEW.POPUP);
+  }, []);
+
   // 메인의 채팅방 카드 클릭 → 팝업 + 채팅방 화면
   const openChatRoom = useCallback((room) => {
     setChatRoomDTO(room);
@@ -95,6 +102,11 @@ export const ChatProvider = ({ children }) => {
   }, []);
 
   // ── 닫기/재오픈 ────────────────────────────────────────────────────────
+  // 팝업 채팅방 생성 창 그냥 닫기
+  const closeCreateRoomPopup = useCallback(() => {
+    setView(null);
+  }, []);
+
   // LIST 에서 닫으면 채팅 자체 종료 (chatRoomDTO 도 제거 → 플로팅 버튼 미노출)
   // ROOM 에서 닫으면 chatRoomDTO 유지 → 플로팅 버튼 노출
   const closeView = useCallback(() => {
@@ -119,6 +131,7 @@ export const ChatProvider = ({ children }) => {
         listFilter,
         isLoading,
         // actions
+        openCreateChatRoom,
         openChatRoom,
         selectRoom,
         leaveRoom,

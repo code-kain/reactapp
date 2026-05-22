@@ -15,7 +15,7 @@ const HeaderBlock = styled.div`
 `;
 
 const CommunityChatComponent = () => {
-  const { openChatRoom } = useChatContext();
+  const { openChatRoom, openCreateChatRoom } = useChatContext();
   const [rooms, setRooms] = useState([]);
 
   // 채팅방 목록에 최초 1회 채팅방 불러오기
@@ -30,7 +30,9 @@ const CommunityChatComponent = () => {
       <ColumnBlock>
         <HeaderBlock>
           <T.H6Bold>실시간 채팅방</T.H6Bold>
-          <ActionBtn $type="submit">+채팅방 만들기</ActionBtn>
+          <ActionBtn $type="submit" onClick={openCreateChatRoom}>
+            +채팅방 만들기
+          </ActionBtn>
         </HeaderBlock>
 
         <RowBlock flexWrap="wrap">
