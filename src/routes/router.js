@@ -61,6 +61,24 @@ import MyPageWithdrawContainer from "../pages/mypage/withdraw/MyPageWithdrawCont
 import CustomServiceNoticeListContainer from '../pages/customservice/notice/list/CustomServiceNoticeListContainer';
 import CustomServiceNoticeWriteContainer from '../pages/customservice/notice/write/CustomServiceNoticeWriteContainer';
 import CustomServiceNoticeEditContainer from "../pages/customservice/notice/edit/CustomServiceNoticeEditContainer";
+import StudyRefactorContainer from "../pages/studyRefactor/StudyContainer";
+import StudyRefactorComponent from "../pages/studyRefactor/StudyComponent";
+import StudyRefactorExperienceContainer from "../pages/studyRefactor/experience/StudyExperienceContainer";
+import StudyRefactorExperienceComponent from "../pages/studyRefactor/experience/StudyExperienceComponent";
+import StudyRefactorExperienceQuizContainer from "../pages/studyRefactor/experience/StudyExperienceQuizContainer";
+import StudyRefactorExperienceQuizComponent from "../pages/studyRefactor/experience/StudyExperienceQuizComponent";
+import StudyRefactorAttendanceContainer from "../pages/studyRefactor/attendance/StudyAttendanceContainer";
+import StudyRefactorChapterContainer from "../pages/studyRefactor/chapter/StudyChapterContainer";
+import StudyRefactorChapterComponent from "../pages/studyRefactor/chapter/StudyChapterComponent";
+import StudyRefactorChapterQuizContainer from "../pages/studyRefactor/chapter/StudyChapterQuizContainer";
+import StudyRefactorChapterQuizComponent from "../pages/studyRefactor/chapter/StudyChapterQuizComponent";
+import StudyRefactorChapterResultContainer from "../pages/studyRefactor/chapter/StudyChapterResultContainer";
+import StudyRefactorSearchContainer from "../pages/studyRefactor/search/StudySearchContainer";
+import StudyRefactorLearnContainer from "../pages/studyRefactor/learn/LearnContainer";
+import StudyRefactorLearnComponent from "../pages/studyRefactor/learn/LearnComponent";
+import StudyRefactorLearnAlphabetContainer from "../pages/studyRefactor/learn/LearnAlphabetContainer";
+import StudyRefactorLearnQuizContainer from "../pages/studyRefactor/learn/LearnQuizContainer";
+import StudyRefactorLearnQuizComponent from "../pages/studyRefactor/learn/LearnQuizComponent";
 
 const router = createBrowserRouter([
   {
@@ -207,6 +225,96 @@ const router = createBrowserRouter([
           {
             path: "learn",
             element: <LearnContainer />
+          }
+        ]
+      },
+      {
+        path: "study-preview",
+        element: <StudyRefactorContainer />,
+        children: [
+          {
+            index: true,
+            element: <StudyRefactorComponent />
+          },
+          {
+            path: "experience",
+            element: <StudyRefactorExperienceContainer />,
+            children: [
+              {
+                index: true,
+                element: <StudyRefactorExperienceComponent />
+              },
+              {
+                path: ":quiz",
+                element: <StudyRefactorExperienceQuizContainer />,
+                children: [
+                  {
+                    path: "questions/:id",
+                    element: <StudyRefactorExperienceQuizComponent />
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            path: "attendance",
+            element: <StudyRefactorAttendanceContainer />
+          },
+          {
+            path: "chapter",
+            element: <StudyRefactorChapterContainer />,
+            children: [
+              {
+                index: true,
+                element: <StudyRefactorChapterComponent />
+              },
+              {
+                path: ":quiz",
+                element: <StudyRefactorChapterQuizContainer />,
+                children: [
+                  {
+                    index: true,
+                    element: <StudyRefactorChapterQuizComponent />
+                  },
+                  {
+                    path: "questions/:id",
+                    element: <StudyRefactorChapterQuizComponent />
+                  },
+                  {
+                    path: "result",
+                    element: <StudyRefactorChapterResultContainer />
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            path: "search",
+            element: <StudyRefactorSearchContainer />
+          },
+          {
+            path: "learn",
+            element: <StudyRefactorLearnContainer />,
+            children: [
+              {
+                index: true,
+                element: <StudyRefactorLearnComponent />
+              },
+              {
+                path: "alphabet",
+                element: <StudyRefactorLearnAlphabetContainer />
+              },
+              {
+                path: "quiz/:type",
+                element: <StudyRefactorLearnQuizContainer />,
+                children: [
+                  {
+                    path: "questions/:id",
+                    element: <StudyRefactorLearnQuizComponent />
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
