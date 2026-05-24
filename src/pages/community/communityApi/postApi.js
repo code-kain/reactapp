@@ -33,10 +33,17 @@ export const fetchUserPosts = async ({
 };
 
 // 특정 유저가 좋아요 한 게시글 목록 조회
-export const fetchUserLikedPosts = async ({ page = 1, userId = 1 }) => {
+export const fetchUserLikedPosts = async ({
+  page = 1,
+  userId = 1,
+  order = "latest",
+}) => {
   const params = new URLSearchParams({ page });
+  const orderParams = new URLSearchParams({ order });
 
-  const res = await fetch(`${ROOT_URL}/posts/user/${userId}/likes?${params}`);
+  const res = await fetch(
+    `${ROOT_URL}/posts/user/${userId}/likes?${params}&${orderParams}`,
+  );
   if (!res.ok) throw new Error("유저 좋아요 게시글 목록 조회 실패");
   return res.json();
 };
