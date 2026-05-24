@@ -95,6 +95,7 @@ const SelectRoomListPanel = () => {
           <S.SelectCountBadge>{rooms.length}</S.SelectCountBadge>
         </S.PanelHeader>
         <S.Divider />
+        {/* 실제 방 리스트 영역 */}
         {showRooms ? (
           <S.RoomList>
             {isLoading && rooms.length === 0 && (

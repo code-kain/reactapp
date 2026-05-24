@@ -40,7 +40,7 @@ const LiveChatListSection = () => {
         <LiveChatCardCandidate1
           key={id}
           {...roomData}
-          onJoin={() => openChatRoom(...roomData)}
+          onJoin={() => openChatRoom({ id, ...roomData })}
         />
       ))}
     </LiveChatRow>
