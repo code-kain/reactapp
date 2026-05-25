@@ -37,6 +37,12 @@ const TYPE_PATH = {
   like: "liked-post",
 };
 
+const TYPE_PLACEHOLDER = {
+  post: "게시글 검색",
+  comment: "댓글 검색",
+  like: "좋아요 한 게시글 검색",
+};
+
 const PostFilterBar = ({
   counts = { post: 42, comment: 42, like: 42 },
   onSortChange,
@@ -57,12 +63,33 @@ const PostFilterBar = ({
   };
 
   const handleSortClick = (key) => {
-    setSearchParams({ order: key });
+    // setSearchParams({ order: key });
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set("order", key);
+      return next;
+    });
   };
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
     onSearch?.(e.target.value);
+  };
+
+  const handleSearch = () => {
+    if (!searchValue.trim()) {
+      alert("검색어를 입력해 주세요.");
+      return;
+    }
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set("keyword", searchValue.trim());
+      return next;
+    });
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleSearch();
   };
 
   return (
@@ -71,11 +98,12 @@ const PostFilterBar = ({
         <SearchBox>
           <SearchInput
             type="text"
-            placeholder="게시글 검색"
+            placeholder={TYPE_PLACEHOLDER[activeType]}
             value={searchValue}
             onChange={handleSearchChange}
+            onKeyDown={handleKeyDown}
           />
-          <SearchIcon src={iconSearch} alt="검색" />
+          <SearchIcon src={iconSearch} alt="검색" onClick={handleSearch} />
         </SearchBox>
       </SearchRow>
       <FilterRow>
@@ -160,6 +188,7 @@ const SearchIcon = styled.img`
   width: 16px;
   height: 16px;
   flex-shrink: 0;
+  cursor: pointer;
 `;
 
 const FilterRow = styled.div`

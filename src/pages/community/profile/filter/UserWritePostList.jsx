@@ -15,12 +15,22 @@ const UserWritePostList = () => {
   const { userId } = useParams();
   const [searchParams] = useSearchParams();
   const order = searchParams.get("order") ?? "latest";
+  const keyword = searchParams.get("keyword") ?? "";
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [keyword]);
 
   useEffect(() => {
     const load = async () => {
       setIsLoading(true);
       try {
-        const res = await fetchUserPosts({ page: currentPage, userId, order });
+        const res = await fetchUserPosts({
+          page: currentPage,
+          userId,
+          order,
+          keyword,
+        });
         setPosts(res.data.posts);
         setTotalPages(res.data.totalPages);
       } catch (e) {
@@ -30,7 +40,7 @@ const UserWritePostList = () => {
       }
     };
     load();
-  }, [currentPage, userId, order]);
+  }, [currentPage, userId, order, keyword]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);

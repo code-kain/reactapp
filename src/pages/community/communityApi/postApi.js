@@ -21,12 +21,14 @@ export const fetchUserPosts = async ({
   page = 1,
   userId = 1,
   order = "latest",
+  keyword = "",
 }) => {
   const params = new URLSearchParams({ page });
   const orderParams = new URLSearchParams({ order });
+  const searchParams = new URLSearchParams({ keyword });
 
   const res = await fetch(
-    `${ROOT_URL}/posts/user/${userId}?${params}&${orderParams}`,
+    `${ROOT_URL}/posts/user/${userId}?${params}&${orderParams}&${searchParams}`,
   );
   if (!res.ok) throw new Error("유저가 작성한 게시글 목록 조회 실패");
   return res.json();
