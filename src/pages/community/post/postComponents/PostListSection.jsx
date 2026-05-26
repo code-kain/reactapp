@@ -59,6 +59,35 @@ const PostListSection = () => {
     listTopRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  let content;
+  if (isLoading) {
+    content = (
+      <S.ColumnBlock>
+        <PostListCardSkeleton />
+        <PostListCardSkeleton />
+        <PostListCardSkeleton />
+        <PostListCardSkeleton />
+      </S.ColumnBlock>
+    );
+  } else if (posts.length === 0) {
+    content = <NoResult />;
+  } else {
+    content = (
+      <S.ColumnBlock marginBottom="42px">
+        {posts.map(({ id, ...posts }) => (
+          <PostListCard key={id} id={id} {...posts} />
+        ))}
+        {totalPages > 1 && (
+          <PageCount
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        )}
+      </S.ColumnBlock>
+    );
+  }
+
   return (
     <>
       <S.PostHeader ref={listTopRef}>
@@ -80,33 +109,7 @@ const PostListSection = () => {
           <S.ActionBtn $type="submit">글쓰기</S.ActionBtn>
         </Link>
       </S.PostCategoryHeader>
-      {isLoading ? (
-        <S.ColumnBlock>
-          <PostListCardSkeleton />
-          <PostListCardSkeleton />
-          <PostListCardSkeleton />
-          <PostListCardSkeleton />
-        </S.ColumnBlock>
-      ) : (
-        <S.ColumnBlock marginBottom="42px">
-          {posts.length === 0 ? (
-            <NoResult />
-          ) : (
-            <>
-              {posts.map(({ id, ...posts }) => (
-                <PostListCard key={id} id={id} {...posts} />
-              ))}
-              {totalPages > 1 && (
-                <PageCount
-                  totalPages={totalPages}
-                  currentPage={currentPage}
-                  onPageChange={handlePageChange}
-                />
-              )}
-            </>
-          )}
-        </S.ColumnBlock>
-      )}
+      {content}
     </>
   );
 };
