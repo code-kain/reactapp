@@ -28,10 +28,19 @@ import {
 const ProfileCard = ({ profile, onLevelClick }) => {
   const navigate = useNavigate();
 
+  // 기본 프로필 여부 확인
+  const isDefaultProfile = (profileImage) => {
+    return (
+      !profileImage ||
+      profileImage === "default.jpg" ||
+      profileImage === "null"
+    );
+  };
+
   // 프로필 이미지 경로 처리
   const getProfileImageSrc = (profileImage) => {
-    if (!profileImage || profileImage === "default.jpg") {
-      return "/assets/images/default-profile.png";
+    if (isDefaultProfile(profileImage)) {
+      return null;
     }
 
     if (profileImage.startsWith("http") || profileImage.startsWith("blob:")) {
@@ -64,19 +73,23 @@ const ProfileCard = ({ profile, onLevelClick }) => {
     return date.includes("T") ? date.split("T")[0] : date.split(" ")[0];
   };
 
+  // 프로필 이미지
+  const profileImageSrc = getProfileImageSrc(profile?.userProfile);
+
   return (
     <ProfileWrapper>
       {/* 프로필 이미지 */}
       <ProfileImage>
-        <img
-          src={getProfileImageSrc(profile?.userProfile)}
-          alt=""
-          draggable={false}
-          onError={(e) => {
-            e.currentTarget.onerror = null;
-            e.currentTarget.src = "/assets/images/default-profile.png";
-          }}
-        />
+        {profileImageSrc && (
+          <img
+            src={profileImageSrc}
+            alt=""
+            draggable={false}
+            onError={(e) => {
+              e.currentTarget.remove();
+            }}
+          />
+        )}
       </ProfileImage>
 
       <ProfileContent>

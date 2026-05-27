@@ -45,16 +45,12 @@ const MyPageEditComponent = () => {
 
     getUserInfo();
   }, []);
+  const socialProvider = String(userInfo?.socialMemberProvider || "").toLowerCase();
 
-  // 소셜 로그인 여부
   const isSocialUser =
-    userInfo?.socialUser === true ||
-    userInfo?.isSocialUser === true ||
-    userInfo?.social === true ||
-    Boolean(userInfo?.socialMemberProvider) ||
-    Boolean(userInfo?.socialProvider) ||
-    userInfo?.loginType === "SOCIAL" ||
-    userInfo?.userLoginType === "SOCIAL";
+    socialProvider === "google" ||
+    socialProvider === "kakao" ||
+    socialProvider === "naver";
 
   const handleWithdrawClick = () => {
     navigate("/mypage/withdraw");
@@ -99,7 +95,6 @@ const MyPageEditComponent = () => {
           />
 
           <ProfileGuideCard />
-
           <SecurityGuideCard />
         </S.EditSideArea>
       </S.EditLayout>

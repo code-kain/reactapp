@@ -10,11 +10,17 @@ const navLinks = [
   { label: "고객지원", to: "/customservice/notice" },
 ];
 
-const DEFAULT_PROFILE_IMAGE = "/assets/images/default-profile.png";
+const isDefaultProfile = (profileImage) => {
+  return (
+    !profileImage ||
+    profileImage === "default.jpg" ||
+    profileImage === "null"
+  );
+};
 
 const getProfileImageSrc = (profileImage) => {
-  if (!profileImage || profileImage === "default.jpg" || profileImage === "null") {
-    return DEFAULT_PROFILE_IMAGE;
+  if (isDefaultProfile(profileImage)) {
+    return null;
   }
 
   if (profileImage.startsWith("http") || profileImage.startsWith("blob:")) {
@@ -58,6 +64,9 @@ const EumLayout = ({
       window.removeEventListener("userProfileUpdated", handleUserProfileUpdated);
     };
   }, []);
+
+  // 헤더 프로필 이미지
+  const layoutProfileImageSrc = getProfileImageSrc(layoutUser?.userProfile);
 
   return (
     <div>
@@ -110,15 +119,18 @@ const EumLayout = ({
 
               <S.StyledLink to="/mypage">
                 <S.UserChip>
-                  <S.UserAvatar
-                    src={getProfileImageSrc(layoutUser.userProfile)}
-                    alt="프로필"
-                    draggable={false}
-                    onError={(e) => {
-                      e.currentTarget.onerror = null;
-                      e.currentTarget.src = DEFAULT_PROFILE_IMAGE;
-                    }}
-                  />
+                  <S.UserAvatar>
+                    {layoutProfileImageSrc && (
+                      <img
+                        src={layoutProfileImageSrc}
+                        alt=""
+                        draggable={false}
+                        onError={(e) => {
+                          e.currentTarget.remove();
+                        }}
+                      />
+                    )}
+                  </S.UserAvatar>
 
                   <S.UserName>
                     {layoutUser.userNickname || layoutUser.userName}

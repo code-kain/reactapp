@@ -3,11 +3,17 @@ import { useNavigate } from "react-router-dom";
 
 import S from "../style";
 
-const DEFAULT_PROFILE_IMAGE = "/assets/images/default-profile.png";
+const isDefaultProfile = (profileImage) => {
+  return (
+    !profileImage ||
+    profileImage === "default.jpg" ||
+    profileImage === "null"
+  );
+};
 
 const getProfileImageSrc = (profileImage) => {
-  if (!profileImage || profileImage === "default.jpg" || profileImage === "null") {
-    return DEFAULT_PROFILE_IMAGE;
+  if (isDefaultProfile(profileImage)) {
+    return null;
   }
 
   if (profileImage.startsWith("http") || profileImage.startsWith("blob:")) {
@@ -73,6 +79,15 @@ const ProfileCard = ({
     setIsProfileDeleted(false);
     setPreviewImage(objectUrl);
     syncPreview({ userProfile: objectUrl });
+
+    window.dispatchEvent(
+      new CustomEvent("userProfileUpdated", {
+        detail: {
+          userNickname,
+          userProfile: objectUrl,
+        },
+      })
+    );
   };
 
   const handleDeleteProfileImage = () => {
@@ -205,7 +220,10 @@ const ProfileCard = ({
           return;
         }
 
-        nextProfileImage = previewImage;
+        nextProfileImage =
+          profileResult.data?.userProfile ||
+          profileResult.data?.uploadedUrl ||
+          previewImage;
       }
 
       const updatedUser = {
@@ -241,6 +259,8 @@ const ProfileCard = ({
     navigate("/mypage", { replace: true });
   };
 
+  const imageSrc = previewImage || getProfileImageSrc(userInfo.userProfile);
+
   return (
     <>
       <S.ProfileSection>
@@ -251,15 +271,16 @@ const ProfileCard = ({
       <S.ProfileEditCard>
         <S.ProfileTop>
           <S.ProfileImageBox>
-            <img
-              src={previewImage || getProfileImageSrc(userInfo.userProfile)}
-              alt=""
-              draggable={false}
-              onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = DEFAULT_PROFILE_IMAGE;
-              }}
-            />
+            {imageSrc && (
+              <img
+                src={imageSrc}
+                alt=""
+                draggable={false}
+                onError={(e) => {
+                  e.currentTarget.remove();
+                }}
+              />
+            )}
           </S.ProfileImageBox>
 
           <S.ProfileImageInfo>
@@ -315,6 +336,15 @@ const ProfileCard = ({
                     setUserNickname(e.target.value);
                     setIsNicknameChecked(false);
                     syncPreview({ userNickname: e.target.value });
+
+                    window.dispatchEvent(
+                      new CustomEvent("userProfileUpdated", {
+                        detail: {
+                          userNickname: e.target.value,
+                          userProfile: previewImage || userInfo.userProfile,
+                        },
+                      })
+                    );
                   }}
                   placeholder="닉네임을 입력해 주세요"
                 />
