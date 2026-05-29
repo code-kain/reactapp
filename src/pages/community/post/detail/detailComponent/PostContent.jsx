@@ -9,6 +9,7 @@ import { DEFAULT_IMAGES } from "../../../constants";
 import PostContentSkeleton from "./PostContentSkeleton";
 import modifyIcon from "../../../assets/icon/modify-grey.svg";
 import deleteIcon from "../../../assets/icon/trash-can-red.svg";
+import PostAlertPopup from "../../postComponents/PostAlertPopup";
 
 const { PALETTE } = theme;
 
@@ -16,6 +17,7 @@ const PostContent = ({ postId }) => {
   const [post, setPost] = useState(null);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [deletePopupOpen, setDeletePopupOpen] = useState(false);
 
   useEffect(() => {
     if (!postId) return;
@@ -135,7 +137,11 @@ const PostContent = ({ postId }) => {
                 <S.IconButton aria-label="게시글 수정">
                   <img src={modifyIcon} alt="수정" />
                 </S.IconButton>
-                <S.IconButton danger aria-label="게시글 삭제">
+                <S.IconButton
+                  danger
+                  aria-label="게시글 삭제"
+                  onClick={() => setDeletePopupOpen(true)}
+                >
                   <img src={deleteIcon} alt="삭제" />
                 </S.IconButton>
               </>
@@ -156,6 +162,15 @@ const PostContent = ({ postId }) => {
 
       {/* 댓글 섹션 */}
       {/* <CommentSection /> */}
+
+      <PostAlertPopup
+        isOpen={deletePopupOpen}
+        onClose={() => setDeletePopupOpen(false)}
+        onConfirm={() => {
+          // TODO: 게시글 삭제 API 연동
+          setDeletePopupOpen(false);
+        }}
+      />
     </div>
   );
 };
