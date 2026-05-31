@@ -14,6 +14,22 @@ import * as S from "./style";
 
 const optionIcons = ["수어", "표현", "단어", "연습", "복습"];
 
+// 랜덤 순서 생성: 한 번 시작한 학습 세션에서는 같은 순서를 유지
+const getOrderValue = (value) => {
+  const hash = String(value).split("").reduce((sum, character) => ((sum * 31) + character.charCodeAt(0)) >>> 0, 0);
+  const mixedHash = Math.imul(hash ^ (hash >>> 16), 0x45d9f3b);
+
+  return (mixedHash ^ (mixedHash >>> 16)) >>> 0;
+};
+
+const shuffleItems = (items, seed) =>
+  [...items].sort((left, right) => {
+    const leftOrder = getOrderValue(`${seed}-${left.id}`);
+    const rightOrder = getOrderValue(`${seed}-${right.id}`);
+
+    return leftOrder - rightOrder;
+  });
+
 // 단어 보기 생성: 백엔드 단어를 퀴즈 보기 카드 형식으로 변환
 const createWordOption = (word, index, correct = false, videoMode = false) => ({
   id: `${correct ? "correct" : "word"}-${word.id}`,
@@ -49,12 +65,12 @@ const createWrongOptions = ({ word, words, baseQuiz, correctLabel, videoMode = f
   return [...wordOptions, ...fallbackOptions];
 };
 
-// 보기 순서 생성: 정답이 항상 같은 위치에만 나오지 않도록 가운데에 배치
-const createQuestionOptions = ({ word, words, baseQuiz, correctLabel, videoMode = false }) => {
+// 보기 순서 생성: 정답과 오답 위치를 세션마다 섞어서 배치
+const createQuestionOptions = ({ word, words, baseQuiz, correctLabel, videoMode = false, seed }) => {
   const wrongOptions = createWrongOptions({ word, words, baseQuiz, correctLabel, videoMode });
   const correctOption = createWordOption(word, wrongOptions.length, true, videoMode);
 
-  return [wrongOptions[0], correctOption, ...wrongOptions.slice(1)].filter(Boolean);
+  return shuffleItems([...wrongOptions, correctOption].filter(Boolean), `${seed}-${word.id}`);
 };
 
 const LearnQuizComponent = () => {
@@ -79,10 +95,20 @@ const LearnQuizComponent = () => {
   const [sessionVideos, setSessionVideos] = useState({});
   const [sessionLoading, setSessionLoading] = useState(false);
   const [sessionError, setSessionError] = useState(null);
+  const [sessionSeed, setSessionSeed] = useState(Math.random);
   const baseQuiz = useMemo(() => getLearnQuiz(type), [type]);
 
+  // OpenAPI 단어 우선 사용: 수어 원본이 있으면 기존 더미데이터를 제외
+  const quizWords = useMemo(() => {
+    const openApiWords = sessionWords.filter((word) => word.signWordId);
+
+    return openApiWords.length > 0 ? openApiWords : sessionWords;
+  }, [sessionWords]);
+
+  const orderedQuizWords = useMemo(() => shuffleItems(quizWords, sessionSeed), [quizWords, sessionSeed]);
+
   const quiz = useMemo(() => {
-    if (sessionWords.length === 0) {
+    if (orderedQuizWords.length === 0) {
       return baseQuiz;
     }
 
@@ -90,16 +116,17 @@ const LearnQuizComponent = () => {
       ...baseQuiz,
       id: routeEduId || baseQuiz.id,
       title: lessonTitle || baseQuiz.title,
-      questions: sessionWords.map((word, index) => {
+      questions: orderedQuizWords.map((word, index) => {
         const fallback = baseQuiz.questions[index % baseQuiz.questions.length];
         const correctLabel = word.wordsTitle || fallback.targetWord || fallback.options.find((option) => option.correct)?.label;
         const video = sessionVideos[word.id];
         const options = createQuestionOptions({
           word: { ...word, wordsTitle: correctLabel },
-          words: sessionWords,
+          words: orderedQuizWords,
           baseQuiz,
           correctLabel,
           videoMode: Boolean(video),
+          seed: sessionSeed,
         });
 
         return {
@@ -121,12 +148,13 @@ const LearnQuizComponent = () => {
         };
       }),
     };
-  }, [baseQuiz, lessonTitle, routeEduId, sessionVideos, sessionWords]);
+  }, [baseQuiz, lessonTitle, orderedQuizWords, routeEduId, sessionSeed, sessionVideos]);
 
   const currentIndex = Math.max(Number(id) - 1, 0);
   const question = quiz.questions[currentIndex] || quiz.questions[0];
   const [selectedOptionId, setSelectedOptionId] = useState(null);
   const [status, setStatus] = useState("solving");
+  const [reviewIndex, setReviewIndex] = useState(0);
 
   // 세션 자료 조회: 학습 시작 시 단어와 영상을 불러와 문제 세션 구성
   useEffect(() => {
@@ -142,6 +170,7 @@ const LearnQuizComponent = () => {
         const words = await fetchWordsByLearnId(routeEduId);
         if (ignore) return;
 
+        setSessionSeed(Math.random());
         setSessionWords(words || []);
 
         const videoEntries = await Promise.all(
@@ -195,12 +224,20 @@ const LearnQuizComponent = () => {
     setStatus("solving");
   }, [id]);
 
-  const correctOption = question.options.find((option) => option.correct);
   const selectedOption = question.options.find((option) => option.id === selectedOptionId);
   const progress = Math.round(((currentIndex + 1) / quiz.questions.length) * 100);
   const progressStatus = status === "correct" ? "correct" : status === "incorrect" ? "incorrect" : "solving";
   const isLastQuestion = currentIndex >= quiz.questions.length - 1;
   const isSignalQuiz = type === "signal";
+  const reviewQuestions = useMemo(() => {
+    const wrongQuestionIds = state.answers
+      .filter((answer) => answer.correct === false)
+      .map((answer) => String(answer.questionId));
+    const wrongQuestions = quiz.questions.filter((item) => wrongQuestionIds.includes(String(item.id)));
+
+    return wrongQuestions.length > 0 ? wrongQuestions : [question];
+  }, [question, quiz.questions, state.answers]);
+  const reviewQuestion = reviewQuestions[reviewIndex] || reviewQuestions[0];
 
   // 답안 선택: 사용자가 고른 보기 저장
   const handleSelect = (optionId) => {
@@ -227,10 +264,11 @@ const LearnQuizComponent = () => {
   // 퀴즈 완료: 학습 완료 저장을 시도하고 학습 메인으로 돌아감
   const handleFinish = async () => {
     if (!isGuest && userId) {
+
       // 중복 제거
       const eduWordMapIds = [
         ...new Set(
-          sessionWords
+          quizWords
             .map((word) => word.eduWordMapId)
             .filter(Boolean)
         ),
@@ -292,6 +330,7 @@ const LearnQuizComponent = () => {
   // 다음 문제: 다음 문제로 이동하거나 마지막 문제에서 복습 화면으로 전환
   const handleNext = () => {
     if (isLastQuestion) {
+      setReviewIndex(0);
       setStatus("review");
 
       return;
@@ -305,31 +344,33 @@ const LearnQuizComponent = () => {
     navigate("/study/learn");
   };
 
+  // 복습 다음: 오답 복습을 순서대로 보여주고 마지막에 학습을 종료
+  const handleReviewNext = () => {
+    if (reviewIndex < reviewQuestions.length - 1) {
+      setReviewIndex((prev) => prev + 1);
+
+      return;
+    }
+
+    handleFinish();
+  };
+
   if (status === "review") {
+
     return (
       <S.LearnQuizWrap>
         <S.LearnQuizShell>
-          <S.LearnQuizTop>
-            <S.LearnQuizClose type="button" onClick={handleClose} aria-label="퀴즈 닫기">
-              ×
-            </S.LearnQuizClose>
-            <S.LearnQuizProgress aria-label="복습 진행률" $progress={50} $status="review">
-              <span />
-            </S.LearnQuizProgress>
-            <S.LearnQuizCount />
-          </S.LearnQuizTop>
-
           <LearnQuizReview
             label={isSignalQuiz ? "수신호 배우기" : "수어 배우기"}
             headline={isSignalQuiz ? "수신호를 기억해볼까요?" : "수어를 기억해볼까요?"}
             mediaText={isSignalQuiz ? "수신호 이미지/영상 영역" : "수어 이미지/영상 영역"}
             wordLabel={isSignalQuiz ? "수신호 표현" : "수어 표현"}
-            title={question.feedback.reviewTitle}
-            desc={question.feedback.reviewDesc}
-            action={question.feedback.action}
-            situation={question.feedback.situation}
+            title={reviewQuestion.feedback.reviewTitle}
+            desc={reviewQuestion.feedback.reviewDesc}
+            videoUrl={reviewQuestion.video?.eduVideoUrl}
+            imageUrl={reviewQuestion.word?.wordsImage}
             onSkip={handleFinish}
-            onRemember={handleFinish}
+            onRemember={handleReviewNext}
           />
         </S.LearnQuizShell>
       </S.LearnQuizWrap>
@@ -361,11 +402,6 @@ const LearnQuizComponent = () => {
             {sessionError && <S.SessionStatus>{sessionError}</S.SessionStatus>}
             {question.video && (
               <S.SessionVideoCard>
-                <div>
-                  <span>수어 미리보기</span>
-                  <strong>{question.video.eduVideoTitle || question.targetWord}</strong>
-                  <p>{question.video.eduVideoDetail || question.hint}</p>
-                </div>
                 <video controls src={question.video.eduVideoUrl}>
                   수어 영상을 재생할 수 없어요.
                 </video>
@@ -402,7 +438,7 @@ const LearnQuizComponent = () => {
             status={status}
             exp={question.exp}
             message={status === "correct" ? question.feedback.correct : question.feedback.incorrect}
-            answer={correctOption?.label}
+            description={question.word?.wordsDetail || question.hint}
             onNext={handleNext}
           />
         )}

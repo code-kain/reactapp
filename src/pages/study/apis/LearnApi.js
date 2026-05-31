@@ -47,6 +47,10 @@ export const fetchLearnTotalWordCount = async (learnId) =>
 export const fetchLearnCompletedWordCount = async ({ userId, learnId }) =>
   requestJson(`${BASE_URL}/api/word-studies/users/${userId}/edus/${learnId}/completed-count`, {}, "학습 완료 단어 개수 조회 실패");
 
+// 오늘 완료한 단어 개수 조회
+export const fetchTodayCompletedWordCount = async (userId) =>
+  requestJson(`${BASE_URL}/api/word-studies/users/${userId}/today-completed-count`, {}, "오늘 완료 단어 개수 조회 실패");
+
 // 학습 단어 완료 저장
 export const finishLearnWord = async ({ userId, eduWordMapId }) =>
   requestJson(
