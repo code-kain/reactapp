@@ -79,6 +79,7 @@ export const ChatProvider = ({ children }) => {
     // 반환되는 채팅방 id 를 통해서 채팅방 정보 불러오기
     setChatRoomDTO(chatRoomDTO);
     setScreen(SCREEN.ROOM);
+    setRoomListRefreshKey((k) => k + 1);
   }, []);
 
   // ── 화면 전환 ──────────────────────────────────────────────────────────
@@ -129,9 +130,12 @@ export const ChatProvider = ({ children }) => {
     setView(VIEW.POPUP);
   }, []);
 
+  const [roomListRefreshKey, setRoomListRefreshKey] = useState(0);
+
   const deleteRoom = useCallback(() => {
     setChatRoomDTO(null);
     setView(null);
+    setRoomListRefreshKey((k) => k + 1);
   }, []);
 
   return (
@@ -156,6 +160,7 @@ export const ChatProvider = ({ children }) => {
         closeCreateRoomPopup,
         reopenChat,
         deleteRoom,
+        roomListRefreshKey,
       }}
     >
       {children}
