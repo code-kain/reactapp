@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import theme from "../../../../styles/theme";
 
-const FIGMA_AVATAR =
-  "https://www.figma.com/api/mcp/asset/4848f13d-3ea0-4289-9296-1a6aae75dd78";
 const DEFAULT_PROFILE =
   "https://gi.esmplus.com/cjfals1015/eum/userProfile/thumbnail/default1.png";
 
@@ -13,7 +11,6 @@ const WHITE_40 = "rgba(255, 255, 255, 0.4)";
 const WHITE_85 = "rgba(255, 255, 255, 0.85)";
 
 const MOCK_USER = {
-  nickname: "minjun_k",
   level: 1,
   title: "열공러",
   streak: "30일 연속 학습",
@@ -22,23 +19,23 @@ const MOCK_USER = {
   avatarUrl: DEFAULT_PROFILE,
 };
 
-const CommunityProfile = ({ user = MOCK_USER, onFollow }) => {
+const CommunityProfile = ({ userNickname, userProfile, userIntro }) => {
   return (
     <ProfileBar>
-      <AvatarImg src={user.avatarUrl} alt={user.nickname} />
+      <AvatarImg src={userProfile} alt={userNickname} />
       <UserInfoRow>
         <TextBlock>
-          <Nickname>{user.nickname}</Nickname>
+          <Nickname>{userNickname}</Nickname>
           <TagRow>
             <InfoTag>
-              Lv.{user.level} · {user.title}
+              Lv.{MOCK_USER.level} · {MOCK_USER.title}
             </InfoTag>
-            <InfoTag>{user.streak}</InfoTag>
+            <InfoTag>{MOCK_USER.streak}</InfoTag>
           </TagRow>
-          <Bio>{user.bio}</Bio>
-          <JoinInfo>{user.joinInfo}</JoinInfo>
+          <Bio>{userIntro}</Bio>
+          <JoinInfo>{MOCK_USER.joinInfo}</JoinInfo>
         </TextBlock>
-        <FollowButton onClick={onFollow}>+ 팔로우</FollowButton>
+        <FollowButton>+ 팔로우</FollowButton>
       </UserInfoRow>
     </ProfileBar>
   );

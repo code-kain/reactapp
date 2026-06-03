@@ -1,32 +1,6 @@
 import styled from "styled-components";
 import theme from "../../../../styles/theme";
 
-const MOCK_STATS = [
-  { value: 42,  label: "게시글" },
-  { value: 87,  label: "댓글" },
-  { value: 111, label: "받은 좋아요" },
-  { value: 63,  label: "좋아요한 글" },
-];
-
-const UserActivity = ({ stats = MOCK_STATS }) => {
-  return (
-    <Card>
-      <Title>📊 활동 통계</Title>
-      <Divider />
-      <StatsGrid>
-        {stats.map(({ value, label }) => (
-          <StatItem key={label}>
-            <StatValue>{value}</StatValue>
-            <StatLabel>{label}</StatLabel>
-          </StatItem>
-        ))}
-      </StatsGrid>
-    </Card>
-  );
-};
-
-export default UserActivity;
-
 const Card = styled.div`
   background: ${theme.PALETTE.white};
   border-radius: 20px;
@@ -90,3 +64,33 @@ const StatLabel = styled.p`
   line-height: 20px;
   white-space: nowrap;
 `;
+
+const UserActivity = ({
+  postCount,
+  commentCount,
+  postLikeCount,
+  getLikeCount,
+}) => {
+  const userStats = [
+    { value: postCount, label: "게시글" },
+    { value: commentCount, label: "댓글" },
+    { value: getLikeCount, label: "받은 좋아요" },
+    { value: postLikeCount, label: "좋아요한 글" },
+  ];
+  return (
+    <Card>
+      <Title>📊 활동 통계</Title>
+      <Divider />
+      <StatsGrid>
+        {userStats.map(({ value, label }) => (
+          <StatItem key={label}>
+            <StatValue>{value}</StatValue>
+            <StatLabel>{label}</StatLabel>
+          </StatItem>
+        ))}
+      </StatsGrid>
+    </Card>
+  );
+};
+
+export default UserActivity;

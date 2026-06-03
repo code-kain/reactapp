@@ -44,9 +44,11 @@ const TYPE_PLACEHOLDER = {
 };
 
 const PostFilterBar = ({
-  counts = { post: 3, comment: 87, like: 63 },
   onSortChange,
   onSearch,
+  postCount,
+  postLikeCount,
+  commentCount,
 }) => {
   const navigate = useNavigate();
   const { userId } = useParams();
@@ -56,6 +58,11 @@ const PostFilterBar = ({
   const [searchValue, setSearchValue] = useState("");
 
   const activeSort = searchParams.get("order") ?? "latest";
+  const counts = {
+    post: postCount,
+    comment: commentCount,
+    like: postLikeCount,
+  };
 
   const handleTypeClick = (key) => {
     setActiveType(key);
