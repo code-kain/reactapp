@@ -6,23 +6,43 @@ import SideChat from "../chat/sideChat/SideChat";
 import PopupChatScreen from "../chat/popupChat/PopupChatScreen";
 import PopupChatRoomSelect from "../chat/popupChat/PopupChatRoomSelect";
 import CreateChatRoomModal from "../chat/createChatRoom/CreateChatRoomModal";
+import useDraggable from "./useDraggable";
 
-const PopupOverlay = styled.div`
+const PopupDarkOverlay = styled.div`
   position: fixed;
   inset: 0;
   z-index: 200;
-  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.45);
+`;
+
+const PopupDraggableContainer = styled.div`
+  position: fixed;
+  z-index: 201;
 `;
 
 const SideChatWrapper = styled.div`
   position: fixed;
-  bottom: 32px;
-  right: 32px;
   z-index: 100;
 `;
 
 const GlobalChatFloat = () => {
   const { chatRoomDTO, view, screen, isLoading } = useChatContext();
+
+  const {
+    pos: sidePos,
+    onDragHandleMouseDown: onSideDragMouseDown,
+  } = useDraggable(
+    Math.max(0, window.innerWidth - 344),
+    Math.max(0, window.innerHeight - 532),
+  );
+
+  const {
+    pos: popupPos,
+    onDragHandleMouseDown: onPopupDragMouseDown,
+  } = useDraggable(
+    Math.max(0, Math.floor((window.innerWidth - 872) / 2)),
+    73,
+  );
 
   return ReactDOM.createPortal(
     <>
@@ -31,33 +51,35 @@ const GlobalChatFloat = () => {
       )}
 
       {view === VIEW.SIDE && (
-        <SideChatWrapper>
-          <SideChat />
+        <SideChatWrapper style={{ left: sidePos.x, top: sidePos.y }}>
+          <SideChat onDragMouseDown={onSideDragMouseDown} />
         </SideChatWrapper>
       )}
 
+      {view === VIEW.POPUP && <PopupDarkOverlay />}
+
       {view === VIEW.POPUP && screen === SCREEN.CREATE && (
-        <PopupOverlay>
-          <CreateChatRoomModal />
-        </PopupOverlay>
+        <PopupDraggableContainer style={{ left: popupPos.x, top: popupPos.y }}>
+          <CreateChatRoomModal onDragMouseDown={onPopupDragMouseDown} />
+        </PopupDraggableContainer>
       )}
 
       {view === VIEW.POPUP && screen === SCREEN.UPDATE && (
-        <PopupOverlay>
-          <CreateChatRoomModal mode="update" />
-        </PopupOverlay>
+        <PopupDraggableContainer style={{ left: popupPos.x, top: popupPos.y }}>
+          <CreateChatRoomModal mode="update" onDragMouseDown={onPopupDragMouseDown} />
+        </PopupDraggableContainer>
       )}
 
       {view === VIEW.POPUP && screen === SCREEN.ROOM && (
-        <PopupOverlay>
-          <PopupChatScreen />
-        </PopupOverlay>
+        <PopupDraggableContainer style={{ left: popupPos.x, top: popupPos.y }}>
+          <PopupChatScreen onDragMouseDown={onPopupDragMouseDown} />
+        </PopupDraggableContainer>
       )}
 
       {view === VIEW.POPUP && screen === SCREEN.LIST && (
-        <PopupOverlay>
-          <PopupChatRoomSelect />
-        </PopupOverlay>
+        <PopupDraggableContainer style={{ left: popupPos.x, top: popupPos.y }}>
+          <PopupChatRoomSelect onDragMouseDown={onPopupDragMouseDown} />
+        </PopupDraggableContainer>
       )}
     </>,
     document.body,
