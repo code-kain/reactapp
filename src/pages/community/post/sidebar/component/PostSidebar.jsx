@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import NoticeItem from "./NoticeItem";
 import RelatedPostCard from "../RelatedPostCard";
 import PostSideUserProfile from "./postSideUserProfile";
 import {
@@ -11,6 +10,7 @@ import {
   NoticeTitleText,
   NoticeList,
 } from "../postSideBarStyle";
+import SideNotice from "../../../common/SideNotice";
 
 const S = {
   Wrapper,
@@ -90,18 +90,7 @@ const PostSidebar = ({
         ))}
       </S.RelatedCard>
 
-      <S.NoticeCard>
-        <S.NoticeTitleText>공지사항</S.NoticeTitleText>
-        <S.NoticeList>
-          {notices.map((notice) => (
-            <NoticeItem
-              key={notice.id}
-              title={notice.title}
-              date={notice.date}
-            />
-          ))}
-        </S.NoticeList>
-      </S.NoticeCard>
+      <SideNotice />
     </S.Wrapper>
   );
 };
