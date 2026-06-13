@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import RelatedPostCard from "../RelatedPostCard";
+import RelatedPostCard from "./RelatedPostCard";
 import stripHtml from "../../../functions/stripHtml";
 import { RelatedCard, SectionTitle } from "../postSideBarStyle";
 

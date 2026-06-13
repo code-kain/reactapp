@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import theme from "../../../../styles/theme";
-import { FONT_FAMILY, SURFACE } from "../../constants";
+import theme from "../../../../../styles/theme";
+import { FONT_FAMILY, SURFACE } from "../../../constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots, faHeart } from "@fortawesome/free-solid-svg-icons";
-import { Thumbnail } from "../postComponents/postListCardStyle";
-import postDefaultProfile from "../../assets/post_default_profile.png";
+import { Thumbnail } from "../../postComponents/postListCardStyle";
+import postDefaultProfile from "../../../assets/post_default_profile.png";
 
 const { GRAYSCALE, TEXT_COLOR, FONT_SIZE, FONT_WEIGHT } = theme;
 

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import PostSideUserProfile from "./postSideUserProfile";
-import { Wrapper, BackButton } from "../postSideBarStyle";
-import SideNotice from "../../../common/SideNotice";
-import SidePopularPosts from "./SidePopularPosts";
+import PostSideUserProfile from "./component/postSideUserProfile";
+import { Wrapper, BackButton } from "./postSideBarStyle";
+import SideNotice from "../../common/SideNotice";
+import SidePopularPosts from "./component/SidePopularPosts";
 
 const S = {
   Wrapper,
