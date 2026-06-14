@@ -148,6 +148,11 @@ const PostWrite = () => {
     return errs;
   };
 
+  const extractFirstImage = (html) => {
+    const match = html.match(/<img[^>]+src="([^"]+)"/);
+    return match ? match[1] : null;
+  };
+
   const handleSubmit = async () => {
     const errs = validate();
     if (Object.keys(errs).length > 0) {
@@ -155,19 +160,23 @@ const PostWrite = () => {
       return;
     }
     setErrors({});
+    const html = editor.getHTML();
+    const postProfile = extractFirstImage(html);
     try {
       if (editState) {
         await updatePost(editState.postId, {
           postTitle: title,
-          postContent: editor.getHTML(),
+          postContent: html,
           postTag: activeCategory,
+          postProfile,
         });
         navigate(`/community/post/${editState.postId}`, { replace: true });
       } else {
         const { data } = await createPost({
           postTitle: title,
-          postContent: editor.getHTML(),
+          postContent: html,
           postTag: activeCategory,
+          postProfile,
         });
         navigate(`/community/post/${data}`, { replace: true });
       }

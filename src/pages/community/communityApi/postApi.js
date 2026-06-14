@@ -89,12 +89,12 @@ export const cancelPostLike = async (postId) => {
 };
 
 // 게시글 작성
-export const createPost = async ({ postTitle, postContent, postTag }) => {
+export const createPost = async ({ postTitle, postContent, postTag, postProfile }) => {
   const res = await fetch(`${PRIVATE_ROOT_URL}/posts`, {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ postTitle, postContent, postTag }),
+    body: JSON.stringify({ postTitle, postContent, postTag, postProfile }),
   });
   if (!res.ok) throw new Error("게시글 작성 실패");
   return res.json();
@@ -117,13 +117,13 @@ export const uploadPostImage = async (file) => {
 // 게시글 수정
 export const updatePost = async (
   postId,
-  { postTitle, postContent, postTag },
+  { postTitle, postContent, postTag, postProfile },
 ) => {
   const res = await fetch(`${PRIVATE_ROOT_URL}/posts/${postId}`, {
     method: "PUT",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ postTitle, postContent, postTag }),
+    body: JSON.stringify({ postTitle, postContent, postTag, postProfile }),
   });
   if (!res.ok) throw new Error("게시글 수정 실패");
   return res.json();
