@@ -16,7 +16,7 @@ const CurriculumSection = () => {
           <React.Fragment key={c.step}>
             <S.StepItem>
               <S.StepTooltip>
-                {c.items.slice(0, 3).map((item, j) => (
+                {c.items.map((item, j) => (
                   <span key={j}>· {item}</span>
                 ))}
               </S.StepTooltip>
