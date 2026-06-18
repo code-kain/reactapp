@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import ConfirmPopup from "../../common/ConfirmPopup";
 import styled from "styled-components";
 import { LAYOUT, radius, shadows } from "../../constants";
 import { useChatContext, SCREEN, LIST_FILTER } from "../../context/ChatContext";
@@ -23,11 +24,16 @@ const ChatPanel = styled.div`
 // ─── Component ────────────────────────────────────────────────────────────────
 
 const SideChat = ({ onDragMouseDown }) => {
-  const { screen, listFilter, chatRoomDTO, closeView, expandView, leaveRoom } =
-    useChatContext();
-
-  // 사이드의 minus 버튼은 ROOM 화면에선 "목록으로 되돌리기", 그 외엔 "닫기"
-  const handleMinimize = screen === SCREEN.ROOM ? leaveRoom : closeView;
+  const {
+    screen,
+    listFilter,
+    chatRoomDTO,
+    floatView,
+    closeView,
+    expandView,
+    leaveRoom,
+  } = useChatContext();
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   return (
     <ChatPanel>
@@ -35,9 +41,9 @@ const SideChat = ({ onDragMouseDown }) => {
         screen={screen}
         listFilter={listFilter}
         chatPartnerName={chatRoomDTO?.chatRoomName}
-        onMinimize={handleMinimize}
+        onMinimize={floatView}
         onExpand={expandView}
-        onClose={closeView}
+        onClose={() => setConfirmOpen(true)}
         onDragMouseDown={onDragMouseDown}
       />
 
@@ -56,6 +62,15 @@ const SideChat = ({ onDragMouseDown }) => {
       {screen === SCREEN.ROOM && (
         <SideChatComponent chatRoomId={chatRoomDTO?.id} onViewAll={leaveRoom} />
       )}
+      <ConfirmPopup
+        isOpen={confirmOpen}
+        message="채팅방에서 나가시겠습니까?"
+        onConfirm={() => {
+          closeView();
+          setConfirmOpen(false);
+        }}
+        onClose={() => setConfirmOpen(false)}
+      />
     </ChatPanel>
   );
 };

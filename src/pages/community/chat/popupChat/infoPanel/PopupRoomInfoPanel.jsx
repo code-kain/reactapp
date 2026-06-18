@@ -151,7 +151,7 @@ const PopupRoomInfoPanel = ({
           textColor={colors.live}
           onClick={leaveRoom}
         >
-          채팅방 나가기
+          채팅방 목록 조회
         </OutlineButton>
       </S.PanelSection>
 
