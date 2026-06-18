@@ -96,18 +96,12 @@ export const TabLabel = styled.p`
 `;
 
 export const CountBadge = styled.div`
-  background: ${theme.PALETTE.white};
-  border-radius: 100px;
-  padding: 3px 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
-  font-size: ${theme.FONT_SIZE.h12};
+  font-size: ${theme.FONT_SIZE.h10};
   font-weight: ${theme.FONT_WEIGHT.bold};
   line-height: normal;
   color: ${({ $active }) =>
-    $active ? theme.PALETTE.primary.main : theme.GRAYSCALE[9]};
+    $active ? theme.PALETTE.white : theme.GRAYSCALE[9]};
   white-space: nowrap;
 `;
 
@@ -130,11 +124,12 @@ export const SortButton = styled.button`
     ${({ $active }) =>
       $active ? theme.PALETTE.primary.main : theme.GRAYSCALE[8]};
   background: ${({ $active }) =>
-    $active ? theme.PALETTE.primary.extraLight : theme.PALETTE.white};
+    $active ? theme.PALETTE.primary.main : theme.GRAYSCALE[10]};
   font-size: ${theme.FONT_SIZE.h11};
   font-weight: ${theme.FONT_WEIGHT.bold};
   line-height: normal;
-  color: ${theme.GRAYSCALE[9]};
+  color: ${({ $active }) =>
+    $active ? theme.PALETTE.white : theme.GRAYSCALE[9]};
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
