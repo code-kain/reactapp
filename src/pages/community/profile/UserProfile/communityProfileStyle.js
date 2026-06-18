@@ -91,7 +91,7 @@ export const FollowButton = styled.button`
   flex-shrink: 0;
   padding: 10px;
   border-radius: 12px;
-  border: 2px solid ${WHITE_40};
+  border: 1px solid ${WHITE_40};
   background: ${WHITE_20};
   font-size: ${theme.FONT_SIZE.h10};
   font-weight: ${theme.FONT_WEIGHT.bold};

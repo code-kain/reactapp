@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import ConfirmPopup from "../../../common/ConfirmPopup";
 import {
   Header,
   HeaderLeft,
@@ -53,25 +54,30 @@ const PopupChatHeader = ({
   chatRoomUsers,
   onDragMouseDown,
 }) => {
-  const { leaveRoom, minimizeView, closeView } = useChatContext();
+  const { minimizeView, floatView, closeView } = useChatContext();
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   return (
-    <S.Header onMouseDown={onDragMouseDown} style={{ cursor: "grab", userSelect: "none" }}>
-      <S.HeaderLeft>
-        <S.ProfileArea>
-          <ThumbnailBox
-            src={chatRoomProfile || defaultProfileImg}
-            alt="채팅방 프로필"
-            onError={(e) => {
-              e.target.src = defaultProfileImg;
-            }}
-          />
-          <S.RoomInfo>
-            <S.RoomTitle>{chatRoomName ?? "채팅방"}</S.RoomTitle>
-            <S.RoomSubText>{chatRoomUsers ?? 0}명 참여 중</S.RoomSubText>
-          </S.RoomInfo>
-        </S.ProfileArea>
-        {/* <S.MessageStatus>
+    <>
+      <S.Header
+        onMouseDown={onDragMouseDown}
+        style={{ cursor: "grab", userSelect: "none" }}
+      >
+        <S.HeaderLeft>
+          <S.ProfileArea>
+            <ThumbnailBox
+              src={chatRoomProfile || defaultProfileImg}
+              alt="채팅방 프로필"
+              onError={(e) => {
+                e.target.src = defaultProfileImg;
+              }}
+            />
+            <S.RoomInfo>
+              <S.RoomTitle>{chatRoomName ?? "채팅방"}</S.RoomTitle>
+              <S.RoomSubText>{chatRoomUsers ?? 0}명 참여 중</S.RoomSubText>
+            </S.RoomInfo>
+          </S.ProfileArea>
+          {/* <S.MessageStatus>
           <S.LiveBadge>
             <S.LiveIcon src={liveVectorUrl} alt="" />
             <S.LiveText>LIVE</S.LiveText>
@@ -81,17 +87,27 @@ const PopupChatHeader = ({
             <S.TodayMsgText>오늘 00개 메시지</S.TodayMsgText>
           </S.TodayMsgRow>
         </S.MessageStatus> */}
-      </S.HeaderLeft>
-      <S.HeaderRight>
-        <S.LeaveBtn onClick={leaveRoom}>채팅방 나가기</S.LeaveBtn>
-        <S.MinimizeBtn onClick={minimizeView}>
-          <img src={minusIcon} alt="최소화" />
-        </S.MinimizeBtn>
-        <S.CloseBtn onClick={closeView}>
-          <img src={closeIcon} alt="닫기" />
-        </S.CloseBtn>
-      </S.HeaderRight>
-    </S.Header>
+        </S.HeaderLeft>
+        <S.HeaderRight>
+          <S.LeaveBtn onClick={minimizeView}>채팅방 축소</S.LeaveBtn>
+          <S.MinimizeBtn onClick={floatView}>
+            <img src={minusIcon} alt="최소화" />
+          </S.MinimizeBtn>
+          <S.CloseBtn onClick={() => setConfirmOpen(true)}>
+            <img src={closeIcon} alt="닫기" />
+          </S.CloseBtn>
+        </S.HeaderRight>
+      </S.Header>
+      <ConfirmPopup
+        isOpen={confirmOpen}
+        message="채팅방에서 나가시겠습니까?"
+        onConfirm={() => {
+          closeView();
+          setConfirmOpen(false);
+        }}
+        onClose={() => setConfirmOpen(false)}
+      />
+    </>
   );
 };
 

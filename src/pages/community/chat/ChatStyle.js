@@ -337,7 +337,7 @@ const MsgContentCol = styled.div`
   width: 206px;
 `;
 
-const SenderName = styled(T.H12Bold).attrs({ $color: colors.textSub })``;
+const SenderName = styled(T.H11Bold).attrs({ $color: colors.textSub })``;
 
 const MsgTimeRow = styled.div`
   display: flex;
@@ -353,11 +353,11 @@ const OtherBubble = styled.div`
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 `;
 
-const OtherBubbleText = styled(T.H11Regular).attrs({
+const OtherBubbleText = styled(T.H10Regular).attrs({
   $color: colors.textMain,
 })``;
 
-const MsgTime = styled(T.H12Regular).attrs({ $color: colors.textSub })`
+const MsgTime = styled(T.H11Regular).attrs({ $color: colors.textSub })`
   white-space: nowrap;
 `;
 
@@ -375,7 +375,7 @@ const MyBubble = styled.div`
   max-width: 188px;
 `;
 
-const MyBubbleText = styled(T.H11Regular).attrs({
+const MyBubbleText = styled(T.H10Regular).attrs({
   $color: colors.textWhite,
 })``;
 
@@ -425,7 +425,7 @@ const TextInputBox = styled.div`
   padding: 8px 10px;
 `;
 
-const InputPlaceholder = styled(T.H11Regular).attrs({
+const InputPlaceholder = styled(T.H10Regular).attrs({
   $color: colors.textSub,
 })`
   white-space: nowrap;
@@ -464,6 +464,7 @@ const RightPanelScroll = styled.div`
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  background: ${colors.bgCard};
 
   &::-webkit-scrollbar {
     width: 3px;
@@ -875,9 +876,9 @@ const RoomIconBox = styled.div`
   justify-content: center;
   overflow: hidden;
   img {
-    width: 20px;
-    height: 11px;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
@@ -1030,6 +1031,15 @@ const OngoingProfileBox = styled.div`
   background: ${colors.primaryLight};
   border-radius: ${radius.input};
   flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const OngoingRoomInfo = styled.div`
