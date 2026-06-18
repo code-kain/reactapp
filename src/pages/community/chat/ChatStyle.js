@@ -875,9 +875,9 @@ const RoomIconBox = styled.div`
   justify-content: center;
   overflow: hidden;
   img {
-    width: 20px;
-    height: 11px;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
@@ -1030,6 +1030,15 @@ const OngoingProfileBox = styled.div`
   background: ${colors.primaryLight};
   border-radius: ${radius.input};
   flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const OngoingRoomInfo = styled.div`

@@ -74,8 +74,10 @@ const REQUEST_USERS = [
 ];
 
 const SelectRoomListPanel = () => {
-  const { listFilter, changeListFilter, selectRoom, roomListRefreshKey } = useChatContext();
-  const { rooms, isLoading, hasMore, loaderRef } = useChatRoomList(roomListRefreshKey);
+  const { listFilter, changeListFilter, selectRoom, roomListRefreshKey } =
+    useChatContext();
+  const { rooms, isLoading, hasMore, loaderRef } =
+    useChatRoomList(roomListRefreshKey);
 
   // 사이드 확대 등으로 좌측 탭과 매핑되지 않는 필터(ONGOING)가 들어오면
   // 시각적으로는 LIVE 탭에 해당하는 콘텐츠를 보여줌
@@ -153,7 +155,7 @@ const SelectRoomListPanel = () => {
         )}
       </S.PanelTop>
 
-      <S.FilterTabsRow>
+      {/* <S.FilterTabsRow>
         {FILTER_TABS.map((tab) => (
           <S.FilterTab
             key={tab.key}
@@ -163,7 +165,7 @@ const SelectRoomListPanel = () => {
             {tab.label}
           </S.FilterTab>
         ))}
-      </S.FilterTabsRow>
+      </S.FilterTabsRow> */}
     </S.SelectLeftPanel>
   );
 };

@@ -75,19 +75,10 @@ export const MemberInfo = styled.div`
 
 export const MemberName = styled.p`
   margin: 0;
-  font-size: ${theme.FONT_SIZE.h11};
+  font-size: ${theme.FONT_SIZE.h10};
   font-weight: ${theme.FONT_WEIGHT.bold};
   color: ${theme.TEXT_COLOR.basic};
-  line-height: ${theme.FONT_LINE.h11};
-`;
-
-export const MemberStatus = styled.p`
-  margin: 0;
-  font-size: ${theme.FONT_SIZE.h12};
-  font-weight: ${theme.FONT_WEIGHT.regular};
-  color: ${theme.GRAYSCALE[9]};
-  line-height: ${theme.FONT_LINE.h12};
-  letter-spacing: -0.2px;
+  line-height: ${theme.FONT_LINE.h10};
 `;
 
 export const LevelBadge = styled.div`
