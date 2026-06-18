@@ -26,7 +26,7 @@ const formatRelativeTime = (isoString) => {
     return `${h}시 ${m}분`;
   }
 
-  return `${created.getFullYear()}년 ${created.getMonth() + 1}월 ${created.getDate()}일`;
+  return `${created.getFullYear()}.${created.getMonth() + 1}.${created.getDate()}`;
 };
 
 export default formatRelativeTime;
