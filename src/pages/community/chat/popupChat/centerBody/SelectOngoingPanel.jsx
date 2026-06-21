@@ -18,6 +18,7 @@ import {
 } from "../../ChatStyle";
 import useJoinedChatRoomList from "../../hooks/useJoinedChatRoomList";
 import { useChatContext } from "../../../context/ChatContext";
+import chatDefaultProfile from "../../../assets/chat/chat_default_profile.svg";
 
 const S = {
   SelectRightPanel,
@@ -65,7 +66,15 @@ const SelectOngoingPanel = () => {
           <>
             {rooms.map((room) => (
               <S.OngoingRoomItem key={room.id} onClick={() => selectRoom(room)}>
-                <S.OngoingProfileBox />
+                <S.OngoingProfileBox>
+                  <img
+                    src={room.chatRoomProfile || chatDefaultProfile}
+                    alt={room.chatRoomName}
+                    onError={(e) => {
+                      e.target.src = chatDefaultProfile;
+                    }}
+                  />
+                </S.OngoingProfileBox>
                 <S.OngoingRoomInfo>
                   <S.OngoingRoomTopRow>
                     <S.OngoingRoomNameRow>

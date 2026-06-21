@@ -41,10 +41,9 @@ export default function SideUserProfile() {
               </S.AvatarWrapper>
               <S.MemberInfo>
                 <S.MemberName>{member.userNickname}</S.MemberName>
-                <S.MemberStatus>{member.userIntro}</S.MemberStatus>
               </S.MemberInfo>
             </S.ProfileGroup>
-            <S.LevelBadge>♥ {member.getLikeCount}</S.LevelBadge>
+            <S.LevelBadge>Lv.{member.userLevel ?? 1}</S.LevelBadge>
           </S.MemberItem>
         ))}
       </S.MemberList>

@@ -108,7 +108,11 @@ export const ChatProvider = ({ children }) => {
       try {
         roomInfo = await getChatRoomInfo(chatRoomId);
       } catch {
-        roomInfo = { id: chatRoomId, chatRoomName: "1:1 채팅", chatRoomType: "개인" };
+        roomInfo = {
+          id: chatRoomId,
+          chatRoomName: "1:1 채팅",
+          chatRoomType: "개인",
+        };
       }
 
       setChatRoomDTO(roomInfo);
@@ -143,14 +147,16 @@ export const ChatProvider = ({ children }) => {
     setView(null);
   }, []);
 
-  // LIST 에서 닫으면 채팅 자체 종료 (chatRoomDTO 도 제거 → 플로팅 버튼 미노출)
-  // ROOM 에서 닫으면 chatRoomDTO 유지 → 플로팅 버튼 노출
-  const closeView = useCallback(() => {
-    if (screen === SCREEN.LIST) {
-      setChatRoomDTO(null);
-    }
+  // view 만 null → chatRoomDTO 유지 → 플로팅 버튼 노출
+  const floatView = useCallback(() => {
     setView(null);
-  }, [screen]);
+  }, []);
+
+  // 항상 완전 종료: chatRoomDTO 도 제거 → 플로팅 버튼 미노출
+  const closeView = useCallback(() => {
+    setChatRoomDTO(null);
+    setView(null);
+  }, []);
 
   const reopenChat = useCallback(() => {
     setScreen(SCREEN.ROOM);
@@ -199,6 +205,7 @@ export const ChatProvider = ({ children }) => {
         changeListFilter,
         minimizeView,
         expandView,
+        floatView,
         closeView,
         closeCreateRoomPopup,
         reopenChat,

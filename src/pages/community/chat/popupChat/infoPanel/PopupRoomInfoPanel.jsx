@@ -6,6 +6,7 @@ import OutlineButton from "../../../common/OutlineButton";
 import ToggleSwitch from "../../../common/ToggleSwitch";
 import T from "../../../communityTextStyle";
 import ChatRoomReportPopup from "../../../report/ChatRoomReportPopup";
+import ConfirmPopup from "../../../common/ConfirmPopup";
 import LoginRequiredPopup from "../../../common/LoginRequiredPopup";
 import useAuthStore from "../../../../../store/authStore";
 import {
@@ -64,6 +65,7 @@ const PopupRoomInfoPanel = ({
   const [readToggle, setReadToggle] = useState(false);
   const [reportPopupOpen, setReportPopupOpen] = useState(false);
   const [loginPopupOpen, setLoginPopupOpen] = useState(false);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
   const handleReportClick = () => {
     if (!isAuthenticated) {
@@ -111,7 +113,7 @@ const PopupRoomInfoPanel = ({
         </S.PanelSection>
       )}
 
-      <S.PanelSection $gap="9px">
+      {/* <S.PanelSection $gap="9px">
         <S.SectionLabel>태그</S.SectionLabel>
         <S.TagGrid>
           {tags.map((tag, i) => (
@@ -120,7 +122,7 @@ const PopupRoomInfoPanel = ({
             </S.Tag>
           ))}
         </S.TagGrid>
-      </S.PanelSection>
+      </S.PanelSection> */}
 
       <S.PanelSection $gap="8px">
         <S.SectionLabel>접근성 도구</S.SectionLabel>
@@ -151,7 +153,7 @@ const PopupRoomInfoPanel = ({
           textColor={colors.live}
           onClick={leaveRoom}
         >
-          채팅방 나가기
+          채팅방 목록 조회
         </OutlineButton>
       </S.PanelSection>
 
@@ -168,7 +170,7 @@ const PopupRoomInfoPanel = ({
           <OutlineButton
             borderColor={colors.danger}
             textColor={colors.danger}
-            onClick={handleDeleteRoom}
+            onClick={() => setDeleteConfirmOpen(true)}
           >
             채팅방 삭제
           </OutlineButton>
@@ -204,6 +206,15 @@ const PopupRoomInfoPanel = ({
       <LoginRequiredPopup
         isOpen={loginPopupOpen}
         onClose={() => setLoginPopupOpen(false)}
+      />
+      <ConfirmPopup
+        isOpen={deleteConfirmOpen}
+        message="채팅방을 삭제하시겠습니까?"
+        onConfirm={() => {
+          handleDeleteRoom();
+          setDeleteConfirmOpen(false);
+        }}
+        onClose={() => setDeleteConfirmOpen(false)}
       />
     </S.RightPanelScroll>
   );

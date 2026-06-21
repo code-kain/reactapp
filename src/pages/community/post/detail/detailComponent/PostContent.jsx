@@ -21,6 +21,7 @@ import LoginRequiredPopup from "../../../common/LoginRequiredPopup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import useAuthStore from "../../../../../store/authStore";
+import formatRelativeTime from "../../../functions/formatRelativeTime";
 
 const { PALETTE } = theme;
 
@@ -131,7 +132,14 @@ const PostContent = ({ post, postId }) => {
   return (
     <div>
       <S.PostContentWrapper>
-        <S.PostTitle>{postTitle}</S.PostTitle>
+        {/* 제목 + 좋아요 */}
+        <S.TitleRow>
+          <S.PostTitle>{postTitle}</S.PostTitle>
+          <S.LikeButton liked={liked} onClick={clickPostLike}>
+            <FontAwesomeIcon icon={faHeart} />
+            <span>{likeCount}</span>
+          </S.LikeButton>
+        </S.TitleRow>
 
         {/* 게시글 작성자 정보 */}
         <S.AuthorRow>
@@ -147,7 +155,7 @@ const PostContent = ({ post, postId }) => {
             <S.AuthorSubRow>
               <S.LevelBadge>{userLevel}</S.LevelBadge>
               <S.MetaText>
-                · {postCreateAt} · 조회 {postReadCount}
+                · {formatRelativeTime(postCreateAt)} · 조회 {postReadCount}
               </S.MetaText>
             </S.AuthorSubRow>
           </S.AuthorMeta>
@@ -166,26 +174,13 @@ const PostContent = ({ post, postId }) => {
           ))}
         </S.TagRow> */}
 
-        {/* 접근성 도구 */}
-        <S.AccessibilityBox>
-          <S.AccessibilityLabel $color={PALETTE.primary.main}>
-            접근성 도구
-          </S.AccessibilityLabel>
-          <S.AccessBtn variant="blue" pos="180px">
-            수어로 보기
-          </S.AccessBtn>
-          <S.AccessBtn variant="green" pos="466px">
-            글 읽어주기
-          </S.AccessBtn>
-        </S.AccessibilityBox>
-
-        {/* 게시글 관련 액션 버튼 // 추후 컴포넌트로 분리 생각 */}
+        {/* 게시글 관련 액션 버튼 */}
         <S.ActionRow>
-          {/* 좋아요 버튼 */}
-          <S.LikeButton liked={liked} onClick={clickPostLike}>
-            <FontAwesomeIcon icon={faHeart} />
-            <span>{likeCount}</span>
-          </S.LikeButton>
+          {/* 접근성 도구 */}
+          <S.AccessTools>
+            <S.AccessToolBtn variant="sign">수어로 보기</S.AccessToolBtn>
+            <S.AccessToolBtn variant="read">글 읽어주기</S.AccessToolBtn>
+          </S.AccessTools>
           <S.ActionButtons>
             <S.IconButton aria-label="링크 복사">
               <img
@@ -214,7 +209,11 @@ const PostContent = ({ post, postId }) => {
                 </S.IconButton>
               </>
             ) : (
-              <S.IconButton danger aria-label="게시글 신고" onClick={handleReportClick}>
+              <S.IconButton
+                danger
+                aria-label="게시글 신고"
+                onClick={handleReportClick}
+              >
                 <img
                   src={DEFAULT_IMAGES.reportIcon}
                   alt="신고"
